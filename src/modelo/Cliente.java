@@ -15,7 +15,11 @@ public class Cliente {
 		this.email = email;
 		this.endereco = endereco;
 	}
-
+	
+	public void cadastrarPedido(Pedido p) {
+		pedidos.add(p);
+	}
+	
 	public String getTelefone() {
 		return telefone;
 	}

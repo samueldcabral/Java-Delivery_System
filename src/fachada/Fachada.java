@@ -34,6 +34,7 @@ public class Fachada {
 		idpedido++;
 		Pedido p = new Pedido(idpedido);	
 		restaurante.adicionar(p);
+
 		return p;
 	}
 	
