@@ -28,7 +28,11 @@ public class Cliente {
 		}
 		return null;
 	}
-		
+	
+	public void cancelarPedido(Pedido p) {
+		pedidos.remove(p);
+	}
+	
 	public String getTelefone() {
 		return telefone;
 	}

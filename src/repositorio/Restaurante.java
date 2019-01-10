@@ -32,6 +32,15 @@ public class Restaurante {
 		return null;
 	}
 
+	public ArrayList<Produto> localizarTodosProduto(String nome){
+		ArrayList<Produto> produtos = new ArrayList<Produto>();
+		for(Produto p : produtos){
+			if(p.getNome().equals(nome))
+				produtos.add(p);
+		}
+		
+		return produtos;
+	}
 	//----------------------------------------------------------------------------
 	
 	public void adicionar(Cliente c){

@@ -22,6 +22,14 @@ public class Pedido {
 		this.id = id;
 	}
 	
+	public LocalDateTime getData() {
+		return data;
+	}
+
+	public void setData(LocalDateTime data) {
+		this.data = data;
+	}
+
 	public void adicionar(Produto p){
 		produtos.add(p);
 	}
