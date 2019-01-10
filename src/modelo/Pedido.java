@@ -11,17 +11,21 @@ import java.util.ArrayList;
 public class Pedido {
 	private int id;
 	private LocalDateTime data = LocalDateTime.now();
-	
+	private double total;
+	private String entregador;
+	private boolean fechado;
 	private ArrayList<Produto> produtos = new ArrayList<Produto>();
-
+	private Cliente cliente;
 	
 	public Pedido(int id) {
 		super();
 		this.id = id;
 	}
+	
 	public void adicionar(Produto p){
 		produtos.add(p);
 	}
+	
 	public void remover(Produto p){
 		produtos.remove(p);
 	}
@@ -42,10 +46,50 @@ public class Pedido {
 	public int getId() {
 		return id;
 	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}
 	
+
+	public double getTotal() {
+		return total;
+	}
+
+	public void setTotal(double total) {
+		this.total = total;
+	}
+
+	public String getEntregador() {
+		return entregador;
+	}
+
+	public void setEntregador(String entregador) {
+		this.entregador = entregador;
+	}
+
+	public boolean isFechado() {
+		return fechado;
+	}
+
+	public void setFechado(boolean fechado) {
+		this.fechado = fechado;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public Cliente getCliente(Cliente c) {
+		if(cliente == c)
+			return cliente;
+		else
+			return null;
+	}
+	
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 
 	@Override
 	public String toString() {

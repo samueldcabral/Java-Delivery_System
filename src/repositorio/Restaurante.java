@@ -41,9 +41,17 @@ public class Restaurante {
 		clientes.remove(c);
 	}
 
-	public Cliente localizarCliente(String nome){
+	public Cliente localizarClienteNome(String nome){
 		for(Cliente c : clientes){
 			if(c.getNome().equals(nome))
+				return c;
+		}
+		return null;
+	}
+	
+	public Cliente localizarCliente(String telefone){
+		for(Cliente c : clientes){
+			if(c.getTelefone().equals(telefone))
 				return c;
 		}
 		return null;
@@ -65,14 +73,42 @@ public class Restaurante {
 		return null;
 	}
 	
+
+	
 	//----------------------------------------------------------------------------
 
 	public ArrayList<Produto> getProdutos() {
 		return produtos;
 	}
-
-	public ArrayList<Pedido> getPrateleiras() {
+	
+	public ArrayList<Produto> getProdutos(String nome) {
+		ArrayList<Produto> produtosNome = new ArrayList<Produto>();
+		for(Produto p : produtos) {
+			if(p.getNome().equals(nome)){
+				produtosNome.add(p);
+			}
+		}
+		return produtosNome;
+	}
+	
+	public ArrayList<Pedido> getPedidos() {
 		return pedidos;
+	}
+	
+	public ArrayList<Pedido> getPedidos(String telefone) {
+		ArrayList<Pedido> pedidosCliente = new ArrayList<Pedido>();
+		Cliente c = this.localizarCliente(telefone);
+		if(c == null)
+			return null;
+		
+		for(Pedido p : pedidos){
+			if(p.getCliente(c) != null)
+				pedidosCliente.add(p);
+		}
+		if(pedidosCliente.size() > 0)
+			return pedidosCliente;
+		else
+			return null;
 	}
 	
 	public ArrayList<Cliente> getClientes(){
@@ -82,7 +118,7 @@ public class Restaurante {
 	public int getTotalProdutos(){
 		return produtos.size();
 	}
-	public int getTotalPrateleiras(){
+	public int getTotalPedidos(){
 		return pedidos.size();
 	}
 	public int getTotalClientes() {

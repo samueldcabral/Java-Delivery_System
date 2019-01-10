@@ -30,12 +30,21 @@ public class Fachada {
 		return p;
 	}
 
-	public static Pedido abrirPedido(){
+	public static Pedido abrirPedido(String telefone) throws Exception{
 		idpedido++;
 		Pedido p = new Pedido(idpedido);	
-		restaurante.adicionar(p);
-
-		return p;
+		Cliente c = restaurante.localizarCliente(telefone);
+		
+		if(c != null) {
+			restaurante.adicionar(p);
+			c.cadastrarPedido(p);
+			p.setCliente(c);
+			return p;
+			
+		}
+		else {
+			throw new Exception("Não pode cadastrar pedido sem cliente cadastrado!");
+		}
 	}
 	
 	public static Cliente cadastrarCliente(String nome, String telefone, String email, String endereco) throws Exception{
@@ -60,7 +69,7 @@ public class Fachada {
 
 		Produto produto = restaurante.localizarProduto(nome_produto);
 		if(produto == null)
-			throw new Exception("inclusao na pedido - produto nao cadastrado:" + nome);
+			throw new Exception("inclusao na pedido - produto nao cadastrado:" + nome_produto);
 
 		
 		pedido.adicionar(produto); 	//relacionar produto e pedido
@@ -75,15 +84,21 @@ public class Fachada {
 	public static ArrayList<Produto> listarProdutos() {
 		return restaurante.getProdutos();
 	}
-
 	
-	
-	public static ArrayList<Pedido> listarPedidos() {
-		return restaurante.getPrateleiras();
+	public static ArrayList<Produto> listarProdutos(String nome) {
+		return restaurante.getProdutos(nome);
 	}
 
+	public static ArrayList<Cliente> listarClientess() {
+		return restaurante.getClientes();
+	}
+
+	public static ArrayList<Pedido> listarPedidos() {
+		return restaurante.getPedidos();
+	}
 	
-	
-	
+	public static ArrayList<Pedido> listarPedidos(String telefone) throws Exception{
+		return restaurante.getPedidos(telefone);
+	}
 
 }//class

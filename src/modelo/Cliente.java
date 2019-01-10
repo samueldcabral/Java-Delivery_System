@@ -20,6 +20,15 @@ public class Cliente {
 		pedidos.add(p);
 	}
 	
+	public Pedido obterPedidoAberto() {
+		for(Pedido p : pedidos) {
+			if(!p.isFechado()) {
+				return p;
+			}
+		}
+		return null;
+	}
+		
 	public String getTelefone() {
 		return telefone;
 	}
