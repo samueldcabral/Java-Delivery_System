@@ -3,6 +3,7 @@
 	<name>projeto_exemplo</name>
 	<comment></comment>
 	<projects>
+		<project>JavaMail</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
