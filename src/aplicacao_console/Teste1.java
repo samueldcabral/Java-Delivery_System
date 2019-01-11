@@ -9,6 +9,7 @@ package aplicacao_console;
 import java.util.ArrayList;
 
 import assets.JavaMail;
+import assets.pdf;
 import fachada.Fachada;
 import modelo.Cliente;
 import modelo.Pedido;
@@ -61,9 +62,14 @@ public class Teste1 {
 			Fachada.adicionarProdutoPedido("Marcio", "Sushi Camarão", "Pedro");
 			
 			//Remove
-			Fachada.removerProdutoPedido("Samuel", "Sushi Camarão");
-			JavaMail.sendEmail();
-			System.out.println("email enviado?");
+			//Fachada.removerProdutoPedido("Samuel", "Sushi Camarão");
+			
+			ArrayList<Pedido> p = new ArrayList<Pedido>();
+			
+			p = Fachada.listarPedidos("9999-1234");
+			enviarEmail(p);
+
+			//System.out.println("email enviado?");
 			System.out.println("\nCadastro Concluido\n");
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -113,7 +119,10 @@ public class Teste1 {
 	}
 
 
-
+	public void enviarEmail(ArrayList<Pedido> p ) {
+		pdf.pdfCreate(p);
+		JavaMail.sendEmail(p);
+	}
 
 	//  ***********************************************
 	public static void main (String[] args)   

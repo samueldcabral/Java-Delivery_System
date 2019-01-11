@@ -3,6 +3,7 @@ package assets;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
@@ -21,10 +22,14 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeMessage.RecipientType;
 
+import modelo.Cliente;
+import modelo.Pedido;
+import modelo.Produto;
+
 public class JavaMail {
 
 	//public static void main(String[] args) throws MessagingException{
-	public static void sendEmail() {
+	public static void sendEmail(ArrayList<Pedido> p) {
 		final String email = "sistemadeliveryjava@gmail.com";
 		final String senha = "JavaDelivery123";
 
@@ -74,21 +79,29 @@ public class JavaMail {
 			//adicionando na multipart
 			multipart.addBodyPart(attachment0);
 			//arquivo que será anexado
-//			String pathname = "teste.pdf";//pode conter o caminho
-//			File file = new File(pathname);
+			String pathname = "";
+			for(Pedido pe : p) {
+				if(!pe.isFechado()) {
+					Cliente c = pe.getCliente();
+					pathname = "pdf/"+c.getNome()+".pdf";
+				}
+			}
+			//String pathname = c.getNome()+".pdf"
+			//String pathname = "teste.pdf";//pode conter o caminho
+			File file = new File(pathname);
 			//criando a segunda parte da mensagem
-//			MimeBodyPart attachment1 = new MimeBodyPart();  
+			MimeBodyPart attachment1 = new MimeBodyPart();  
 			//configurando o DataHandler para o arquivo desejado
 			//a leitura dos bytes, descoberta e configuracao do tipo
 			//do arquivo serão resolvidos pelo JAF (DataHandler e FileDataSource)
-//			attachment1.setDataHandler(new DataHandler(new FileDataSource(file)));
+			attachment1.setDataHandler(new DataHandler(new FileDataSource(file)));
 			
 			//configurando o nome do arquivo que pode ser diferente do arquivo
 			//original 
-//			attachment1.setFileName(file.getName());
+			attachment1.setFileName(file.getName());
 			
 			//adicionando o anexo na multipart
-//			multipart.addBodyPart(attachment1);
+			multipart.addBodyPart(attachment1);
 
 			//adicionando a multipart como conteudo da mensagem 
 			msg.setContent(multipart);
