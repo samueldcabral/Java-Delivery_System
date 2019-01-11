@@ -23,7 +23,8 @@ import javax.mail.internet.MimeMessage.RecipientType;
 
 public class JavaMail {
 
-	public static void main(String[] args) throws MessagingException{
+	//public static void main(String[] args) throws MessagingException{
+	public static void sendEmail() {
 		final String email = "sistemadeliveryjava@gmail.com";
 		final String senha = "JavaDelivery123";
 

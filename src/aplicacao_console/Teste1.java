@@ -8,6 +8,7 @@ package aplicacao_console;
 
 import java.util.ArrayList;
 
+import assets.JavaMail;
 import fachada.Fachada;
 import modelo.Cliente;
 import modelo.Pedido;
@@ -61,7 +62,8 @@ public class Teste1 {
 			
 			//Remove
 			Fachada.removerProdutoPedido("Samuel", "Sushi Camarão");
-			
+			JavaMail.sendEmail();
+			System.out.println("email enviado?");
 			System.out.println("\nCadastro Concluido\n");
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
