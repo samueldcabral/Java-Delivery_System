@@ -37,6 +37,17 @@ public class Pedido {
 	public void remover(Produto p){
 		produtos.remove(p);
 	}
+	
+	public void remover(String nome_produto) {
+		int index=0;
+		for(Produto p : produtos) {
+			if(p.getNome() == nome_produto) {
+				System.out.println("if");
+				index = p.getId();
+			}
+		}
+		produtos.remove(index);
+	}
 
 	public Produto localizar(String nome){
 		for(Produto p : produtos){
@@ -61,6 +72,9 @@ public class Pedido {
 	
 
 	public double getTotal() {
+		for(Produto p : produtos) {
+			total += p.getPreco();
+		}
 		return total;
 	}
 
@@ -107,8 +121,12 @@ public class Pedido {
 			texto += " vazia";
 		else 	
 			for(Produto p: produtos) 
-				texto += " " + p.getNome() ;
-
+				texto += " - " + p.getNome() ;
+		texto += ", Status:";
+		if(fechado)
+			texto += "Fechado";
+		else
+			texto += "Aberto";
 		return texto + "]";
 	}
 

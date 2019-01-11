@@ -31,14 +31,13 @@ public class Restaurante {
 		}
 		return null;
 	}
-
+	
 	public ArrayList<Produto> localizarTodosProduto(String nome){
 		ArrayList<Produto> produtos = new ArrayList<Produto>();
 		for(Produto p : produtos){
-			if(p.getNome().equals(nome))
+			if(p.getNome().contains(nome))
 				produtos.add(p);
 		}
-		
 		return produtos;
 	}
 	//----------------------------------------------------------------------------
@@ -93,7 +92,7 @@ public class Restaurante {
 	public ArrayList<Produto> getProdutos(String nome) {
 		ArrayList<Produto> produtosNome = new ArrayList<Produto>();
 		for(Produto p : produtos) {
-			if(p.getNome().equals(nome)){
+			if(p.getNome().contains(nome)){
 				produtosNome.add(p);
 			}
 		}

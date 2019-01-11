@@ -32,7 +32,7 @@ public class Fachada {
 		return restaurante.getProdutos(nome);
 	}
 
-	public static ArrayList<Cliente> listarClientess() {
+	public static ArrayList<Cliente> listarClientes() {
 		return restaurante.getClientes();
 	}
 
@@ -129,11 +129,7 @@ public class Fachada {
 		if(pedido == null) 
 			throw new Exception("inclusao no pedido - nao existe pedido aberto do cliente: " + nome_cliente);
 
-		ArrayList<Produto> produtos = restaurante.localizarTodosProduto(nome_produto);
-		if(produtos.size() <= 0)
-			throw new Exception("inclusao no pedido - produto nao cadastrado:" + nome_produto);
-		
-		produtos.remove(0);
+		pedido.remover(nome_produto);
 	}
 	
 	//-----------------------------------------------------------------------------------
@@ -182,14 +178,15 @@ public class Fachada {
 	//-----------------------------------------------------------------------------------
 		
 	public static double calcularArrecadacao(LocalDate data) {
-		double valorTotal;
+		double valorTotal = 0;
 		ArrayList<Pedido> pedidos = restaurante.getPedidos();
 		
 		for(Pedido p : pedidos) {
-			//if(p.getData())
+			if(p.getData().getDayOfMonth() == data.getDayOfMonth()) {
+				valorTotal += p.getTotal();
+			}
 		}
-		return idpedido;
-		
+		return valorTotal;
 	}
 	
 	
