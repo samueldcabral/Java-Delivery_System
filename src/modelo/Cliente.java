@@ -8,6 +8,14 @@ public class Cliente {
 	private String endereco;
 	private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
 	
+	public ArrayList<Pedido> getPedidos() {
+		return pedidos;
+	}
+	
+	public int getTotalPedidos() {
+		return pedidos.size();
+	}
+
 	public Cliente(String nome, String telefone, String email, String endereco) {
 		super();
 		this.nome = nome;

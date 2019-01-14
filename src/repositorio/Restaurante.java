@@ -81,7 +81,9 @@ public class Restaurante {
 		return null;
 	}
 	
-
+	public ArrayList<Pedido> getPedidos() {
+		return pedidos;
+	}
 	
 	//----------------------------------------------------------------------------
 
@@ -99,9 +101,7 @@ public class Restaurante {
 		return produtosNome;
 	}
 	
-	public ArrayList<Pedido> getPedidos() {
-		return pedidos;
-	}
+	
 	
 	public ArrayList<Pedido> getPedidos(String telefone) {
 		ArrayList<Pedido> pedidosCliente = new ArrayList<Pedido>();
