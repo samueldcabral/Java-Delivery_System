@@ -66,8 +66,8 @@ public class Teste1 {
 			
 			ArrayList<Pedido> p = new ArrayList<Pedido>();
 			
-			p = Fachada.listarPedidos("9999-1234");
-			enviarEmail(p);
+//			p = Fachada.listarPedidos("9999-1234");
+//			enviarEmail(p);
 
 			//System.out.println("email enviado?");
 			System.out.println("\nCadastro Concluido\n");
@@ -119,10 +119,10 @@ public class Teste1 {
 	}
 
 
-	public void enviarEmail(ArrayList<Pedido> p ) {
-		pdf.pdfCreate(p);
-		JavaMail.sendEmail(p);
-	}
+//	public void enviarEmail(ArrayList<Pedido> p ) {
+//		pdf.pdfCreate(p);
+//		JavaMail.sendEmail(p);
+//	}
 
 	//  ***********************************************
 	public static void main (String[] args)   

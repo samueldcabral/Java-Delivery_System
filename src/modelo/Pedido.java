@@ -121,7 +121,7 @@ public class Pedido {
 			texto += " vazia";
 		else 	
 			for(Produto p: produtos) 
-				texto += " - " + p.getNome() ;
+				texto += " - " + p.getNome() + " R$" + p.getPreco();
 		texto += ", Status:";
 		if(fechado)
 			texto += "Fechado";

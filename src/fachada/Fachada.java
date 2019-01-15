@@ -3,6 +3,8 @@ package fachada;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import assets.JavaMail;
+import assets.pdf;
 import modelo.Cliente;
 import modelo.Pedido;
 import modelo.Produto;
@@ -70,6 +72,14 @@ public class Fachada {
 		c =  new Cliente(nome, telefone, email, endereco);
 		restaurante.adicionar(c);
 		return c;
+	}
+	
+	public static Cliente localizarCliente(String telefone) throws Exception{
+		Cliente c = restaurante.localizarCliente(telefone);
+		if(c != null)
+			return c;
+		else
+			throw new Exception("Cliente nao existe!");
 	}
 	
 	//-----------------------------------------------------------------------------------
@@ -173,6 +183,12 @@ public class Fachada {
 		p.setFechado(true);
 	}
 	
+	public static void enviarPedidoEmail(String telefone) throws Exception {
+		ArrayList<Pedido> p = new ArrayList<Pedido>();
+		p = Fachada.listarPedidos(telefone);
+		pdf.pdfCreate(p);
+		JavaMail.sendEmail(p);
+	}
 	
 	//-----------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------

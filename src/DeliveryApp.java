@@ -30,6 +30,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.JTextField;
@@ -41,12 +42,16 @@ import javax.swing.JTextArea;
 public class DeliveryApp {
 
 	private JFrame frame;
-	private JTextField txtFefe;
+	private JTextField txtArrecadacao;
 	private JTextField txt_cad_cli_nome;
 	private JTextField txt_cad_cli_email;
 	private JTextField txt_cad_cli_ender;
 	private JTextField txt_cad_cli_telefone;
 	private JTextField filtrar_prod;
+	private JTextField txt_abrir_adc_tel;
+	private JTextField txt_abrir_adc_prod;
+	private JTextField txt_abrir_rm_tel;
+	private JTextField txt_abrir_rm_prod;
 
 	/**
 	 * Launch the application.
@@ -357,9 +362,6 @@ public class DeliveryApp {
 		panel_pedidos_abrir.setBackground(new Color(239, 156, 166));
 		panel_pedidos_card.add(panel_pedidos_abrir, "name_8229821385041");
 		
-		JLabel lbl_pedidos_abrir = new JLabel("abrir");
-		panel_pedidos_abrir.add(lbl_pedidos_abrir);
-		
 		final JPanel panel_pedidos_consultar = new JPanel();
 		panel_pedidos_consultar.setBackground(new Color(239, 156, 166));
 		panel_pedidos_card.add(panel_pedidos_consultar, "name_8241655800377");
@@ -382,7 +384,7 @@ public class DeliveryApp {
 		panel_pedidos_listar.add(lblPedidos_listar);
 		
 		final JTextField filtrar_ped = new JTextField();
-		filtrar_ped.setText("n");
+		filtrar_ped.setText("");
 		filtrar_ped.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		filtrar_ped.setEnabled(true);
 		filtrar_ped.setColumns(10);
@@ -394,6 +396,8 @@ public class DeliveryApp {
 		panel_pedidos_listar.add(btn_filtrar_pedido_Ok);
 		
 		final JTextArea txt_filtrar_ped = new JTextArea();
+		txt_filtrar_ped.setFont(new Font("Monospaced", Font.PLAIN, 20));
+		txt_filtrar_ped.setLineWrap(true);
 		txt_filtrar_ped.setBounds(124, 141, 614, 358);
 		panel_pedidos_listar.add(txt_filtrar_ped);
 		
@@ -401,13 +405,11 @@ public class DeliveryApp {
 		btn_filtrar_pedido_Ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String tel = "";
-				System.out.println(filtrar_ped.getText());
-				if(filtrar_ped.getText() != "n") {
-					System.out.println("hereehfuehfeu");
-					tel  = filtrar_ped.getText();
+		
+				if(filtrar_ped.getText().length() == 0) {
+					tel  = "";
 				}else {
-					System.out.println("era pra ta aqui");
-					tel = "";
+					tel = filtrar_ped.getText();
 				}
 				
 				String result = "";
@@ -417,18 +419,18 @@ public class DeliveryApp {
 					
 					ped = Fachada.listarPedidos();
 					for(Pedido p : ped) {
-						result += p.getId() + ": " + p.getTotal() + ", " + p.getCliente() + "\n";
+						result += p.getId() + ": total: " + p.getTotal() + "\ncliente: " + p.getCliente().getNome() + "\nTelefone:" + p.getCliente().getTelefone() + "\nPedidos:" + p.getCliente().getPedidos();
 					}
 					txt_filtrar_ped.setText(result);
 				}else {
-					System.out.println("here????????");
 					try {
 						ped = Fachada.listarPedidos(tel);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+					
 					for(Pedido p : ped) {
-						result += p.getId() + ": " + p.getTotal() + ", " + p.getCliente() + "\n";
+						result += p.getId() + ": The total: " + p.getTotal() + "\ncliente: " + p.getCliente().getNome() + "\nTelefone:" + p.getCliente().getTelefone() + "\nPedidos:" + p.getCliente().getPedidos();
 					}
 					txt_filtrar_ped.setText(result);
 				}
@@ -464,6 +466,271 @@ public class DeliveryApp {
 			}
 		});
 		
+		////////////////////////////////////PANEL PEDIDOS ABRIR
+		//panel_pedidos_abrir
+		
+		panel_pedidos_abrir.setBackground(new Color(239, 156, 166));
+		panel_pedidos_abrir.setLayout(null);
+		JLabel lblPedidos_abrir = new JLabel("Digite o tel:");
+		lblPedidos_abrir.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		lblPedidos_abrir.setBounds(124, 74, 234, 35);
+		panel_pedidos_abrir.add(lblPedidos_abrir);
+		
+		final JTextField abrir_ped = new JTextField();
+		abrir_ped.setText("");
+		abrir_ped.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		abrir_ped.setEnabled(true);
+		abrir_ped.setColumns(10);
+		abrir_ped.setBounds(433, 76, 243, 35);
+		panel_pedidos_abrir.add(abrir_ped);
+		
+		final JButton btn_abrir_pedido_Ok = new JButton("OK");
+		
+		btn_abrir_pedido_Ok.setBounds(688, 74, 83, 37);
+		panel_pedidos_abrir.add(btn_abrir_pedido_Ok);
+		
+		JLabel lbl_abrir_abrir = new JLabel("ABRIR");
+		lbl_abrir_abrir.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		lbl_abrir_abrir.setBounds(124, 13, 234, 35);
+		panel_pedidos_abrir.add(lbl_abrir_abrir);
+		
+		JLabel lbl_abrir_adc = new JLabel("ADICIONAR PRODUTO");
+		lbl_abrir_adc.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		lbl_abrir_adc.setBounds(124, 153, 324, 35);
+		panel_pedidos_abrir.add(lbl_abrir_adc);
+		
+		JLabel lbl_abrir_adc_tel = new JLabel("Digite o nome:");
+		lbl_abrir_adc_tel.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		lbl_abrir_adc_tel.setBounds(124, 214, 292, 35);
+		panel_pedidos_abrir.add(lbl_abrir_adc_tel);
+		
+		txt_abrir_adc_tel = new JTextField();
+		txt_abrir_adc_tel.setText("");
+		txt_abrir_adc_tel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txt_abrir_adc_tel.setEnabled(true);
+		txt_abrir_adc_tel.setColumns(10);
+		txt_abrir_adc_tel.setBounds(428, 216, 248, 35);
+		panel_pedidos_abrir.add(txt_abrir_adc_tel);
+		
+		JButton btn_abrir_adc_tel = new JButton("OK");
+		btn_abrir_adc_tel.setBounds(688, 214, 83, 86);
+		panel_pedidos_abrir.add(btn_abrir_adc_tel);
+		
+		JLabel lbl_abrir_adc_prod = new JLabel("Digite produto:");
+		lbl_abrir_adc_prod.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		lbl_abrir_adc_prod.setBounds(124, 265, 292, 35);
+		panel_pedidos_abrir.add(lbl_abrir_adc_prod);
+		
+		txt_abrir_adc_prod = new JTextField();
+		txt_abrir_adc_prod.setText("");
+		txt_abrir_adc_prod.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txt_abrir_adc_prod.setEnabled(true);
+		txt_abrir_adc_prod.setColumns(10);
+		txt_abrir_adc_prod.setBounds(428, 267, 248, 35);
+		panel_pedidos_abrir.add(txt_abrir_adc_prod);
+		
+		JLabel lbl_abrir_rm = new JLabel("REMOVER PRODUTO");
+		lbl_abrir_rm.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		lbl_abrir_rm.setBounds(124, 335, 324, 35);
+		panel_pedidos_abrir.add(lbl_abrir_rm);
+		
+		JLabel lbl_abrir_rm_tel = new JLabel("Digite o nome:");
+		lbl_abrir_rm_tel.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		lbl_abrir_rm_tel.setBounds(124, 396, 279, 35);
+		panel_pedidos_abrir.add(lbl_abrir_rm_tel);
+		
+		JLabel lbl_abrir_rm_prod = new JLabel("Digite produto:");
+		lbl_abrir_rm_prod.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		lbl_abrir_rm_prod.setBounds(124, 447, 292, 35);
+		panel_pedidos_abrir.add(lbl_abrir_rm_prod);
+		
+		txt_abrir_rm_tel = new JTextField();
+		txt_abrir_rm_tel.setText("");
+		txt_abrir_rm_tel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txt_abrir_rm_tel.setEnabled(true);
+		txt_abrir_rm_tel.setColumns(10);
+		txt_abrir_rm_tel.setBounds(428, 398, 248, 35);
+		panel_pedidos_abrir.add(txt_abrir_rm_tel);
+		
+		txt_abrir_rm_prod = new JTextField();
+		txt_abrir_rm_prod.setText("");
+		txt_abrir_rm_prod.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txt_abrir_rm_prod.setEnabled(true);
+		txt_abrir_rm_prod.setColumns(10);
+		txt_abrir_rm_prod.setBounds(428, 449, 248, 35);
+		panel_pedidos_abrir.add(txt_abrir_rm_prod);
+		
+		JButton btn_abrir_rm_tel = new JButton("OK");
+		btn_abrir_rm_tel.setBounds(688, 396, 83, 86);
+		panel_pedidos_abrir.add(btn_abrir_rm_tel);
+		
+		final JLabel lbl_abrir_status = new JLabel("STATUS: ");
+		lbl_abrir_status.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		lbl_abrir_status.setBounds(537, 13, 301, 35);
+		panel_pedidos_abrir.add(lbl_abrir_status);
+		
+		final JLabel lbl_adc_status = new JLabel("STATUS: ");
+		lbl_adc_status.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		lbl_adc_status.setBounds(537, 153, 301, 35);
+		panel_pedidos_abrir.add(lbl_adc_status);
+		
+		final JLabel lbl_rm_status = new JLabel("STATUS: ");
+		lbl_rm_status.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		lbl_rm_status.setBounds(528, 335, 310, 35);
+		panel_pedidos_abrir.add(lbl_rm_status);
+
+		btn_abrir_pedido_Ok.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String telefone = abrir_ped.getText();
+				Pedido p = null;
+				try {
+					p = Fachada.abrirPedido(telefone);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				lbl_abrir_status.setText("STATUS: " + "ID: " + p.getId());
+			}
+		});
+		
+		btn_abrir_adc_tel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String nome_entregador = "Joao";
+				String nome = txt_abrir_adc_tel.getText();
+				String produto = txt_abrir_adc_prod.getText();
+				
+				try {
+					Fachada.adicionarProdutoPedido(nome, produto, nome_entregador);
+					lbl_adc_status.setText("STATUS: Adicionado!");
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		btn_abrir_rm_tel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String nome = txt_abrir_rm_tel.getText();
+				String produto = txt_abrir_rm_prod.getText();
+				
+				try {
+					Fachada.removerProdutoPedido(nome, produto);
+					lbl_rm_status.setText("STATUS: Removido!");
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		////////////////////////////////////PANEL PEDIDOS CONSULTAR
+		//panel_pedidos_consultar
+		
+		panel_pedidos_consultar.setBackground(new Color(239, 156, 166));
+		panel_pedidos_consultar.setLayout(null);
+		JLabel lblPedidos_consultar = new JLabel("Digite o tel:");
+		lblPedidos_consultar.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		lblPedidos_consultar.setBounds(124, 74, 234, 35);
+		panel_pedidos_consultar.add(lblPedidos_consultar);
+		
+		final JTextField txtPedidos_consultar = new JTextField();
+		txtPedidos_consultar.setText("");
+		txtPedidos_consultar.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtPedidos_consultar.setEnabled(true);
+		txtPedidos_consultar.setColumns(10);
+		txtPedidos_consultar.setBounds(370, 76, 245, 35);
+		panel_pedidos_consultar.add(txtPedidos_consultar);
+		
+		JLabel lbl_consultar = new JLabel("CONSULTAR");
+		lbl_consultar.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		lbl_consultar.setBounds(124, 26, 234, 35);
+		panel_pedidos_consultar.add(lbl_consultar);
+		
+		final JTextArea consultar_txt_field = new JTextArea();
+		consultar_txt_field.setBounds(124, 131, 552, 285);
+		panel_pedidos_consultar.add(consultar_txt_field);
+		
+		final JButton btnFechar = new JButton("FECHAR");
+		btnFechar.setBounds(124, 442, 104, 37);
+		panel_pedidos_consultar.add(btnFechar);
+		
+		final JButton btnCancelar = new JButton("CANCELAR");
+		btnCancelar.setBounds(357, 442, 104, 37);
+		panel_pedidos_consultar.add(btnCancelar);
+		
+		final JButton btnEnviar = new JButton("ENVIAR");
+		btnEnviar.setBounds(551, 442, 104, 37);
+		panel_pedidos_consultar.add(btnEnviar);
+		
+		JButton btnOk = new JButton("OK");
+		
+		btnOk.setBounds(627, 74, 49, 37);
+		panel_pedidos_consultar.add(btnOk);
+		
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String telefone = txtPedidos_consultar.getText();
+				Cliente c = null;
+				Pedido p = null;
+				try {
+					c = Fachada.localizarCliente(telefone);
+					p = Fachada.pedido(telefone);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				String texto = "Nome: " + c.getNome() + "\nPedido: " + p;
+				
+				consultar_txt_field.setText(texto);
+				
+				btnFechar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						String entregador = "joao";
+						String telefone = txtPedidos_consultar.getText();
+						
+						try {
+							Fachada.fecharPedido(telefone, entregador);
+							System.out.println("pedido fechado com sucesso");
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						
+					}
+				});
+				
+				btnCancelar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						String telefone = txtPedidos_consultar.getText();
+						
+						try {
+							Fachada.cancelarPedido(telefone);
+							System.out.println("Pedido cancelado com sucesso");
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				});
+				
+				btnEnviar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						String telefone = txtPedidos_consultar.getText();
+						
+						try {
+							Fachada.enviarPedidoEmail(telefone);
+							System.out.println("Pedido enviado por email!");
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				});
+				
+			}
+		});
+		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 		//ARRECADAÇÃO
 		//panel_arrecadacao
@@ -474,17 +741,17 @@ public class DeliveryApp {
 		panel_arrecadacao.add(lblArrecadacao);
 		panel_arrecadacao.setBackground(new Color(239, 156, 166));
 		
-		txtFefe = new JTextField();
-		txtFefe.setHorizontalAlignment(SwingConstants.CENTER);
-		txtFefe.setFont(new Font("Verdana", Font.PLAIN, 25));
-		txtFefe.setBounds(325, 100, 195, 40);
-		panel_arrecadacao.add(txtFefe);
-		txtFefe.setColumns(10);
+		txtArrecadacao = new JTextField();
+		txtArrecadacao.setHorizontalAlignment(SwingConstants.CENTER);
+		txtArrecadacao.setFont(new Font("Verdana", Font.PLAIN, 25));
+		txtArrecadacao.setBounds(325, 100, 195, 40);
+		panel_arrecadacao.add(txtArrecadacao);
+		txtArrecadacao.setColumns(10);
 		
 		final JLabel lblMostrarTotal = new JLabel("New label");
 		lblMostrarTotal.setBounds(363, 205, 179, 56);
 		lblMostrarTotal.setFont(new Font("Verdana", Font.PLAIN, 25));
-		lblMostrarTotal.setText(txtFefe.getText());
+		lblMostrarTotal.setText(txtArrecadacao.getText());
 		panel_arrecadacao.add(lblMostrarTotal);
 		
 		JButton btnArrecadacaoOk = new JButton("OK");
@@ -505,15 +772,16 @@ public class DeliveryApp {
 			Fachada.adicionarProdutoPedido("Samuel", "Sushi Camarão", "Pedro");
 			Fachada.adicionarProdutoPedido("Samuel", "Temaki Camarão", "Jane");
 			
-			ArrayList<Pedido> p = new ArrayList<Pedido>();
-			p = Fachada.listarPedidos();
-			
-			for(Pedido ped: p ) {
-				if(!ped.isFechado()) {
-					lblMostrarTotal.setText("Total: " + ped.getTotal());
-				}
-			}
-			
+//			ArrayList<Pedido> p = new ArrayList<Pedido>();
+//			p = Fachada.listarPedidos();
+//			
+//			for(Pedido ped: p ) {
+//				if(!ped.isFechado()) {
+//					lblMostrarTotal.setText("Total: " + ped.getTotal());
+//				}
+//			}
+//			
+		   
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -521,18 +789,29 @@ public class DeliveryApp {
 		
 		btnArrecadacaoOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ArrayList<Pedido> p = new ArrayList<Pedido>();
-				try {
-					p = Fachada.listarPedidos();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				String data = txtArrecadacao.getText();
+				String dataArr[] = data.split("/");
+				System.out.println(data + " is " + dataArr[0]);
 				
-				for(Pedido ped: p ) {
-					if(!ped.isFechado()) {
-						lblMostrarTotal.setText("Total: " + ped.getTotal());
-					}
-				}
+				LocalDate dataPesquisa = LocalDate.of(Integer.parseInt(dataArr[0]), Integer.parseInt(dataArr[1]), Integer.parseInt(dataArr[2]));
+				System.out.println(dataPesquisa + "localdate");
+				//LocalDate ontem = LocalDate.of(2019,01,10);
+			    //LocalDate hoje = LocalDate.now();
+
+				double valor = Fachada.calcularArrecadacao(dataPesquisa);
+				lblMostrarTotal.setText("O valor é: " + valor);
+//				ArrayList<Pedido> p = new ArrayList<Pedido>();
+//				try {
+//					p = Fachada.listarPedidos();
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//				
+//				for(Pedido ped: p ) {
+//					if(!ped.isFechado()) {
+//						lblMostrarTotal.setText("Total: " + ped.getTotal());
+//					}
+//				}
 			}
 		});
 //		System.out.println("Produto Cadastrado: "+ produto.getNome());
