@@ -42,8 +42,8 @@ public class Pedido {
 		int index=0;
 		for(Produto p : produtos) {
 			if(p.getNome() == nome_produto) {
-				System.out.println("if");
 				index = p.getId();
+				System.out.println("The id here is " + index);
 			}
 		}
 		produtos.remove(index);

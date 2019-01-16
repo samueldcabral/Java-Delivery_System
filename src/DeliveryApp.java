@@ -32,12 +32,24 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EtchedBorder;
+import java.awt.SystemColor;
+import javax.swing.JTable;
+import javax.swing.JScrollBar;
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class DeliveryApp {
 
@@ -85,6 +97,7 @@ public class DeliveryApp {
 	 * Initialize the contents of the frame.
 	 * @throws IOException 
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initialize() throws IOException {
 		Produto produto;
 		Pedido pedido;
@@ -92,13 +105,15 @@ public class DeliveryApp {
 		
 		
 		frame = new JFrame();
-		frame.setBounds(300, 100, 1238, 735);
+		frame.setBounds(200, 45, 1450, 918);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel_menu = new JPanel();
-		panel_menu.setBackground(new Color(119, 136, 153));
-		panel_menu.setBounds(0, 0, 289, 688);
+		panel_menu.setBorder(new MatteBorder(0, 0, 0, 2, (Color) SystemColor.windowBorder));
+		panel_menu.setBackground(new Color(65, 111, 148));
+		//rgb(35,81,118)
+		panel_menu.setBounds(0, 0, 289, 943);
 		frame.getContentPane().add(panel_menu);
 		panel_menu.setLayout(null);
 		
@@ -106,13 +121,13 @@ public class DeliveryApp {
 		lblMenu.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMenu.setForeground(new Color(255, 255, 255));
 		lblMenu.setFont(new Font("Ubuntu Mono", Font.BOLD, 66));
-		lblMenu.setBounds(12, 13, 265, 76);
+		lblMenu.setBounds(12, 59, 265, 76);
 		panel_menu.add(lblMenu);
 		
 		JButton btnPedidos = new JButton("Pedidos");
 		btnPedidos.setForeground(new Color(255, 255, 255));
 		btnPedidos.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		btnPedidos.setBounds(54, 148, 192, 65);
+		btnPedidos.setBounds(54, 186, 192, 65);
 		btnPedidos.setFocusPainted(false);
 		btnPedidos.setContentAreaFilled(false);
 		panel_menu.add(btnPedidos);
@@ -122,7 +137,7 @@ public class DeliveryApp {
 		btnProdutos.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
 		btnProdutos.setFocusPainted(false);
 		btnProdutos.setContentAreaFilled(false);
-		btnProdutos.setBounds(54, 210, 192, 65);
+		btnProdutos.setBounds(54, 276, 192, 65);
 		panel_menu.add(btnProdutos);
 		
 		JButton btnClientes = new JButton("Clientes");
@@ -130,7 +145,7 @@ public class DeliveryApp {
 		btnClientes.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
 		btnClientes.setFocusPainted(false);
 		btnClientes.setContentAreaFilled(false);
-		btnClientes.setBounds(54, 266, 192, 65);
+		btnClientes.setBounds(54, 376, 192, 65);
 		panel_menu.add(btnClientes);
 		
 		JButton btnArrecadacao = new JButton("Arrecada\u00E7\u00E3o");
@@ -138,12 +153,12 @@ public class DeliveryApp {
 		btnArrecadacao.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
 		btnArrecadacao.setFocusPainted(false);
 		btnArrecadacao.setContentAreaFilled(false);
-		btnArrecadacao.setBounds(29, 329, 248, 65);
+		btnArrecadacao.setBounds(29, 473, 248, 65);
 		panel_menu.add(btnArrecadacao);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(240, 128, 128));
-		panel.setBounds(289, 0, 931, 688);
+		panel.setBounds(289, 0, 1167, 943);
 		frame.getContentPane().add(panel);
 		panel.setLayout(new CardLayout(0, 0));
 		
@@ -156,18 +171,18 @@ public class DeliveryApp {
 		
 		JLabel lblDelivery = new JLabel("Delivery");
 		lblDelivery.setForeground(Color.WHITE);
-		lblDelivery.setFont(new Font("Ubuntu Mono", Font.BOLD | Font.ITALIC, 60));
-		lblDelivery.setBounds(535, 110, 275, 152);
+		lblDelivery.setFont(new Font("Ubuntu Mono", Font.BOLD | Font.ITALIC, 66));
+		lblDelivery.setBounds(647, 207, 400, 152);
 		panel_default.add(lblDelivery);
 		
 		JLabel lblNewLabel = new JLabel("Javai");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setFont(new Font("Ubuntu Mono", Font.BOLD | Font.ITALIC, 56));
-		lblNewLabel.setBounds(197, 122, 196, 152);
+		lblNewLabel.setFont(new Font("Ubuntu Mono", Font.BOLD | Font.ITALIC, 62));
+		lblNewLabel.setBounds(269, 208, 196, 152);
 		panel_default.add(lblNewLabel);
 		
 		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-		picLabel.setBounds(-150, -43, 1200, 800);
+		picLabel.setBounds(-154, -61, 1391, 1011);
 		panel_default.add(picLabel);
 		
 		final JPanel panel_pedidos = new JPanel();
@@ -175,9 +190,6 @@ public class DeliveryApp {
 		panel_pedidos.setVisible(false);
 		panel_pedidos.setLayout(null);
 		
-		
-		
-
 		final JPanel panel_produtos = new JPanel();
 		panel.add(panel_produtos, "name_6258172538637");
 		panel_produtos.setLayout(null);
@@ -209,6 +221,17 @@ public class DeliveryApp {
 		});
 		btnVoltar1.setBounds(25, 34, 97, 25);
 		panel_produtos.add(btnVoltar1);
+		
+		lblMenu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				panel_produtos.setVisible(false);
+				panel_pedidos.setVisible(false);
+				panel_default.setVisible(true);
+				panel_clientes.setVisible(false);
+				panel_arrecadacao.setVisible(false);
+			}
+		});
 		
 		JButton btnVoltar2 = new JButton("<<");
 		btnVoltar2.setForeground(Color.black);
@@ -315,8 +338,10 @@ public class DeliveryApp {
 		//PEDIDOS
 		//panel_pedidos
 		JLabel lblPedidos = new JLabel("Pedidos");
-		lblPedidos.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		lblPedidos.setBounds(399, 17, 140, 59);
+		lblPedidos.setFont(new Font("Ubuntu Mono", Font.PLAIN, 54));
+		lblPedidos.setBounds(469, 28, 429, 56);
+		//lblPedidos.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		//lblPedidos.setBounds(399, 17, 140, 59);
 		panel_pedidos.add(lblPedidos);
 		panel_pedidos.setBackground(new Color(239, 156, 166));
 		
@@ -332,19 +357,19 @@ public class DeliveryApp {
 		btnCadastrar.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
 		btnCadastrar.setFocusPainted(false);
 		btnCadastrar.setContentAreaFilled(false);
-		btnCadastrar.setBounds(359, 97, 148, 59);
+		btnCadastrar.setBounds(485, 97, 148, 59);
 		panel_pedidos.add(btnCadastrar);
 		
 		JButton btnConsultar = new JButton("CONSULTAR");
 		btnConsultar.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
 		btnConsultar.setFocusPainted(false);
 		btnConsultar.setContentAreaFilled(false);
-		btnConsultar.setBounds(560, 97, 236, 59);
+		btnConsultar.setBounds(844, 97, 236, 59);
 		panel_pedidos.add(btnConsultar);
 		
 		JPanel panel_pedidos_card = new JPanel();
-		panel_pedidos_card.setBounds(32, 163, 850, 512);
-		panel_pedidos_card.setBackground(new Color(239, 156, 166));
+		panel_pedidos_card.setBounds(32, 163, 1085, 694);
+		panel_pedidos_card.setBackground(new Color(255, 0, 0));
 		panel_pedidos.add(panel_pedidos_card);
 		panel_pedidos_card.setLayout(new CardLayout(0, 0));
 		
@@ -355,7 +380,7 @@ public class DeliveryApp {
 		
 		final JPanel panel_pedidos_listar = new JPanel();
 		panel_pedidos_card.add(panel_pedidos_listar, "name_8209689044899");
-		panel_pedidos_listar.setBackground(new Color(239, 156, 166));
+		panel_pedidos_listar.setBackground(new Color(0, 250, 154));
 		panel_pedidos_listar.setLayout(null);
 		
 		final JPanel panel_pedidos_abrir = new JPanel();
@@ -380,7 +405,7 @@ public class DeliveryApp {
 		panel_pedidos_listar.setBackground(new Color(239, 156, 166));
 		JLabel lblPedidos_listar = new JLabel("Listar Pedido via Tel:");
 		lblPedidos_listar.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		lblPedidos_listar.setBounds(38, 49, 451, 35);
+		lblPedidos_listar.setBounds(359, 13, 451, 35);
 		panel_pedidos_listar.add(lblPedidos_listar);
 		
 		final JTextField filtrar_ped = new JTextField();
@@ -388,18 +413,25 @@ public class DeliveryApp {
 		filtrar_ped.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		filtrar_ped.setEnabled(true);
 		filtrar_ped.setColumns(10);
-		filtrar_ped.setBounds(463, 51, 148, 35);
+		filtrar_ped.setBounds(359, 75, 317, 35);
 		panel_pedidos_listar.add(filtrar_ped);
 			
 		final JButton btn_filtrar_pedido_Ok = new JButton("OK");
-		btn_filtrar_pedido_Ok.setBounds(623, 49, 74, 35);
+		btn_filtrar_pedido_Ok.setBounds(704, 75, 74, 35);
 		panel_pedidos_listar.add(btn_filtrar_pedido_Ok);
 		
 		final JTextArea txt_filtrar_ped = new JTextArea();
-		txt_filtrar_ped.setFont(new Font("Monospaced", Font.PLAIN, 20));
+		txt_filtrar_ped.setRows(60);
 		txt_filtrar_ped.setLineWrap(true);
-		txt_filtrar_ped.setBounds(124, 141, 614, 358);
+		txt_filtrar_ped.setColumns(3);
+		txt_filtrar_ped.setFont(new Font("Monospaced", Font.BOLD, 20));
+		txt_filtrar_ped.setBounds(236, 134, 615, 547);
 		panel_pedidos_listar.add(txt_filtrar_ped);
+		
+		JLabel lblTelxxxxxxxx = new JLabel("Tel (xxxx-xxxx):");
+		lblTelxxxxxxxx.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		lblTelxxxxxxxx.setBounds(216, 75, 131, 37);
+		panel_pedidos_listar.add(lblTelxxxxxxxx);
 		
 		
 		btn_filtrar_pedido_Ok.addActionListener(new ActionListener() {
@@ -473,7 +505,7 @@ public class DeliveryApp {
 		panel_pedidos_abrir.setLayout(null);
 		JLabel lblPedidos_abrir = new JLabel("Digite o tel:");
 		lblPedidos_abrir.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		lblPedidos_abrir.setBounds(124, 74, 234, 35);
+		lblPedidos_abrir.setBounds(124, 112, 234, 35);
 		panel_pedidos_abrir.add(lblPedidos_abrir);
 		
 		final JTextField abrir_ped = new JTextField();
@@ -481,27 +513,27 @@ public class DeliveryApp {
 		abrir_ped.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		abrir_ped.setEnabled(true);
 		abrir_ped.setColumns(10);
-		abrir_ped.setBounds(433, 76, 243, 35);
+		abrir_ped.setBounds(433, 114, 243, 35);
 		panel_pedidos_abrir.add(abrir_ped);
 		
 		final JButton btn_abrir_pedido_Ok = new JButton("OK");
 		
-		btn_abrir_pedido_Ok.setBounds(688, 74, 83, 37);
+		btn_abrir_pedido_Ok.setBounds(688, 112, 83, 37);
 		panel_pedidos_abrir.add(btn_abrir_pedido_Ok);
 		
 		JLabel lbl_abrir_abrir = new JLabel("ABRIR");
 		lbl_abrir_abrir.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		lbl_abrir_abrir.setBounds(124, 13, 234, 35);
+		lbl_abrir_abrir.setBounds(124, 51, 234, 35);
 		panel_pedidos_abrir.add(lbl_abrir_abrir);
 		
 		JLabel lbl_abrir_adc = new JLabel("ADICIONAR PRODUTO");
 		lbl_abrir_adc.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		lbl_abrir_adc.setBounds(124, 153, 324, 35);
+		lbl_abrir_adc.setBounds(124, 215, 324, 35);
 		panel_pedidos_abrir.add(lbl_abrir_adc);
 		
-		JLabel lbl_abrir_adc_tel = new JLabel("Digite o nome:");
+		JLabel lbl_abrir_adc_tel = new JLabel("Digite o tel:");
 		lbl_abrir_adc_tel.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		lbl_abrir_adc_tel.setBounds(124, 214, 292, 35);
+		lbl_abrir_adc_tel.setBounds(124, 276, 292, 35);
 		panel_pedidos_abrir.add(lbl_abrir_adc_tel);
 		
 		txt_abrir_adc_tel = new JTextField();
@@ -509,16 +541,16 @@ public class DeliveryApp {
 		txt_abrir_adc_tel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		txt_abrir_adc_tel.setEnabled(true);
 		txt_abrir_adc_tel.setColumns(10);
-		txt_abrir_adc_tel.setBounds(428, 216, 248, 35);
+		txt_abrir_adc_tel.setBounds(428, 278, 248, 35);
 		panel_pedidos_abrir.add(txt_abrir_adc_tel);
 		
 		JButton btn_abrir_adc_tel = new JButton("OK");
-		btn_abrir_adc_tel.setBounds(688, 214, 83, 86);
+		btn_abrir_adc_tel.setBounds(688, 276, 83, 86);
 		panel_pedidos_abrir.add(btn_abrir_adc_tel);
 		
 		JLabel lbl_abrir_adc_prod = new JLabel("Digite produto:");
 		lbl_abrir_adc_prod.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		lbl_abrir_adc_prod.setBounds(124, 265, 292, 35);
+		lbl_abrir_adc_prod.setBounds(124, 382, 292, 35);
 		panel_pedidos_abrir.add(lbl_abrir_adc_prod);
 		
 		txt_abrir_adc_prod = new JTextField();
@@ -526,22 +558,22 @@ public class DeliveryApp {
 		txt_abrir_adc_prod.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		txt_abrir_adc_prod.setEnabled(true);
 		txt_abrir_adc_prod.setColumns(10);
-		txt_abrir_adc_prod.setBounds(428, 267, 248, 35);
+		txt_abrir_adc_prod.setBounds(428, 384, 248, 35);
 		panel_pedidos_abrir.add(txt_abrir_adc_prod);
 		
 		JLabel lbl_abrir_rm = new JLabel("REMOVER PRODUTO");
 		lbl_abrir_rm.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		lbl_abrir_rm.setBounds(124, 335, 324, 35);
+		lbl_abrir_rm.setBounds(124, 501, 324, 35);
 		panel_pedidos_abrir.add(lbl_abrir_rm);
 		
-		JLabel lbl_abrir_rm_tel = new JLabel("Digite o nome:");
+		JLabel lbl_abrir_rm_tel = new JLabel("Digite o tel:");
 		lbl_abrir_rm_tel.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		lbl_abrir_rm_tel.setBounds(124, 396, 279, 35);
+		lbl_abrir_rm_tel.setBounds(124, 562, 279, 35);
 		panel_pedidos_abrir.add(lbl_abrir_rm_tel);
 		
 		JLabel lbl_abrir_rm_prod = new JLabel("Digite produto:");
 		lbl_abrir_rm_prod.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		lbl_abrir_rm_prod.setBounds(124, 447, 292, 35);
+		lbl_abrir_rm_prod.setBounds(124, 644, 292, 35);
 		panel_pedidos_abrir.add(lbl_abrir_rm_prod);
 		
 		txt_abrir_rm_tel = new JTextField();
@@ -549,7 +581,7 @@ public class DeliveryApp {
 		txt_abrir_rm_tel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		txt_abrir_rm_tel.setEnabled(true);
 		txt_abrir_rm_tel.setColumns(10);
-		txt_abrir_rm_tel.setBounds(428, 398, 248, 35);
+		txt_abrir_rm_tel.setBounds(428, 564, 248, 35);
 		panel_pedidos_abrir.add(txt_abrir_rm_tel);
 		
 		txt_abrir_rm_prod = new JTextField();
@@ -557,34 +589,87 @@ public class DeliveryApp {
 		txt_abrir_rm_prod.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		txt_abrir_rm_prod.setEnabled(true);
 		txt_abrir_rm_prod.setColumns(10);
-		txt_abrir_rm_prod.setBounds(428, 449, 248, 35);
+		txt_abrir_rm_prod.setBounds(428, 646, 248, 35);
 		panel_pedidos_abrir.add(txt_abrir_rm_prod);
 		
 		JButton btn_abrir_rm_tel = new JButton("OK");
-		btn_abrir_rm_tel.setBounds(688, 396, 83, 86);
+		btn_abrir_rm_tel.setBounds(688, 562, 83, 86);
 		panel_pedidos_abrir.add(btn_abrir_rm_tel);
 		
 		final JLabel lbl_abrir_status = new JLabel("STATUS: ");
 		lbl_abrir_status.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		lbl_abrir_status.setBounds(537, 13, 301, 35);
+		lbl_abrir_status.setBounds(537, 51, 301, 35);
 		panel_pedidos_abrir.add(lbl_abrir_status);
 		
 		final JLabel lbl_adc_status = new JLabel("STATUS: ");
 		lbl_adc_status.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		lbl_adc_status.setBounds(537, 153, 301, 35);
+		lbl_adc_status.setBounds(537, 215, 301, 35);
 		panel_pedidos_abrir.add(lbl_adc_status);
 		
 		final JLabel lbl_rm_status = new JLabel("STATUS: ");
 		lbl_rm_status.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		lbl_rm_status.setBounds(528, 335, 310, 35);
-		panel_pedidos_abrir.add(lbl_rm_status);
+		lbl_rm_status.setBounds(528, 501, 310, 35);
+		panel_pedidos_abrir.add(lbl_rm_status);		
+	
+	
+	    JButton btnNewButton = new JButton("New button");
+	    
+	    btnNewButton.setBounds(823, 25, 97, 25);
+	    panel_pedidos_abrir.add(btnNewButton);
+	    
+	    final JComboBox comboBox_1 = new JComboBox();
+	    comboBox_1.setBounds(428, 326, 248, 36);
+	    panel_pedidos_abrir.add(comboBox_1);
+	    
+	    JLabel lblEscolha = new JLabel("Escolha:");
+	    lblEscolha.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+	    lblEscolha.setBounds(124, 324, 292, 35);
+	    panel_pedidos_abrir.add(lblEscolha);
+	    
+	    JLabel label = new JLabel("Escolha:");
+	    label.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+	    label.setBounds(124, 599, 292, 35);
+	    panel_pedidos_abrir.add(label);
+	    
+	    final JComboBox comboBox = new JComboBox();
+	    comboBox.setBounds(428, 601, 248, 36);
+	    panel_pedidos_abrir.add(comboBox);
+	    
+	    btnNewButton.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent arg0) {
+	    		ArrayList<Produto> prods = new ArrayList<Produto>();
+	    		prods = Fachada.listarProdutos();
+	   
+	    		Vector comboBoxItems=new Vector();
+	    		for(Produto pa : prods) {
+	    			comboBoxItems.add(pa.getNome());
+	    		}
 
+	    	    final DefaultComboBoxModel model = new DefaultComboBoxModel(comboBoxItems);
+	    	    comboBox_1.setModel(new DefaultComboBoxModel(comboBoxItems));
+	    	    
+	    	}
+	    });
+	    
 		btn_abrir_pedido_Ok.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) {	
+				System.out.println(comboBox_1.getSelectedItem());
 				String telefone = abrir_ped.getText();
 				Pedido p = null;
 				try {
 					p = Fachada.abrirPedido(telefone);
+					
+					ArrayList<Produto> prods = new ArrayList<Produto>();
+		    		prods = Fachada.listarProdutos();
+		   
+		    		Vector comboBoxItems=new Vector();
+		    		for(Produto pa : prods) {
+		    			comboBoxItems.add(pa.getNome());
+		    		}
+
+		    	    final DefaultComboBoxModel model = new DefaultComboBoxModel(comboBoxItems);
+		    	    comboBox_1.setModel(new DefaultComboBoxModel(comboBoxItems));
+		    	    
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -596,13 +681,27 @@ public class DeliveryApp {
 		btn_abrir_adc_tel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String nome_entregador = "Joao";
-				String nome = txt_abrir_adc_tel.getText();
-				String produto = txt_abrir_adc_prod.getText();
+				String tel = txt_abrir_adc_tel.getText();
+				String produtoSelected = (String) comboBox_1.getSelectedItem();
 				
 				try {
-					Fachada.adicionarProdutoPedido(nome, produto, nome_entregador);
+					Cliente cli = Fachada.localizarCliente(tel);
+					Fachada.adicionarProdutoPedido(cli.getNome(), produtoSelected, nome_entregador);
 					lbl_adc_status.setText("STATUS: Adicionado!");
 					
+					ArrayList<Produto> prods = new ArrayList<Produto>();
+					Pedido ped = Fachada.pedido(tel);
+					
+		    		prods = ped.getProdutos();
+		   
+		    		Vector comboBoxItems=new Vector();
+		    		for(Produto pa : prods) {
+		    			comboBoxItems.add(pa.getNome());
+		    		}
+
+		    	    final DefaultComboBoxModel model = new DefaultComboBoxModel(comboBoxItems);
+		    	    comboBox.setModel(new DefaultComboBoxModel(comboBoxItems));
+		    	    
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -611,11 +710,13 @@ public class DeliveryApp {
 		
 		btn_abrir_rm_tel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String nome = txt_abrir_rm_tel.getText();
+				String tel = txt_abrir_rm_tel.getText();
 				String produto = txt_abrir_rm_prod.getText();
+				String produtoSelected = (String) comboBox.getSelectedItem();
 				
 				try {
-					Fachada.removerProdutoPedido(nome, produto);
+					Cliente cli = Fachada.localizarCliente(tel);
+					Fachada.removerProdutoPedido(cli.getNome(), produtoSelected);
 					lbl_rm_status.setText("STATUS: Removido!");
 					
 				} catch (Exception e) {
@@ -736,27 +837,44 @@ public class DeliveryApp {
 		//panel_arrecadacao
 		
 		JLabel lblArrecadacao = new JLabel("Arrecada\u00E7\u00E3o");
-		lblArrecadacao.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		lblArrecadacao.setBounds(363, 18, 220, 56);
+		lblArrecadacao.setFont(new Font("Ubuntu Mono", Font.PLAIN, 54));
+		lblArrecadacao.setBounds(425, 31, 429, 56);
 		panel_arrecadacao.add(lblArrecadacao);
 		panel_arrecadacao.setBackground(new Color(239, 156, 166));
 		
 		txtArrecadacao = new JTextField();
 		txtArrecadacao.setHorizontalAlignment(SwingConstants.CENTER);
 		txtArrecadacao.setFont(new Font("Verdana", Font.PLAIN, 25));
-		txtArrecadacao.setBounds(325, 100, 195, 40);
+		txtArrecadacao.setBounds(403, 276, 269, 40);
 		panel_arrecadacao.add(txtArrecadacao);
 		txtArrecadacao.setColumns(10);
 		
 		final JLabel lblMostrarTotal = new JLabel("New label");
-		lblMostrarTotal.setBounds(363, 205, 179, 56);
+		lblMostrarTotal.setBounds(403, 338, 350, 56);
 		lblMostrarTotal.setFont(new Font("Verdana", Font.PLAIN, 25));
-		lblMostrarTotal.setText(txtArrecadacao.getText());
+		lblMostrarTotal.setText("O valor total \u00E9: ");
 		panel_arrecadacao.add(lblMostrarTotal);
 		
 		JButton btnArrecadacaoOk = new JButton("OK");
-		btnArrecadacaoOk.setBounds(523, 97, 72, 43);
+		btnArrecadacaoOk.setBounds(681, 276, 72, 43);
 		panel_arrecadacao.add(btnArrecadacaoOk);
+		
+		JLabel lblDigiteAData = new JLabel("Digite a data para gerar a Arrecada\u00E7ao:");
+		lblDigiteAData.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		lblDigiteAData.setBounds(403, 126, 350, 39);
+		panel_arrecadacao.add(lblDigiteAData);
+		
+		JLabel lblFormatoDdmmaaaa = new JLabel("(formato: dd/mm/aaaa)");
+		lblFormatoDdmmaaaa.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblFormatoDdmmaaaa.setBounds(460, 163, 350, 39);
+		panel_arrecadacao.add(lblFormatoDdmmaaaa);
+		
+		final JCheckBox chckbxHoje = new JCheckBox("Hoje?");
+		
+		chckbxHoje.setFont(new Font("Tahoma", Font.BOLD, 18));
+		chckbxHoje.setBackground(new Color(239, 156, 166));
+		chckbxHoje.setBounds(503, 211, 119, 40);
+		panel_arrecadacao.add(chckbxHoje);
 		
 		
 		try {
@@ -787,8 +905,19 @@ public class DeliveryApp {
 			e.printStackTrace();
 		}
 		
+		chckbxHoje.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(chckbxHoje.isSelected()) {
+					LocalDate hoje = LocalDate.now();
+					txtArrecadacao.setText(hoje.getYear() + "/" + hoje.getMonthValue() + "/" + hoje.getDayOfMonth());
+				}
+			}
+		});
+		
 		btnArrecadacaoOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				String data = txtArrecadacao.getText();
 				String dataArr[] = data.split("/");
 				System.out.println(data + " is " + dataArr[0]);
@@ -799,7 +928,7 @@ public class DeliveryApp {
 			    //LocalDate hoje = LocalDate.now();
 
 				double valor = Fachada.calcularArrecadacao(dataPesquisa);
-				lblMostrarTotal.setText("O valor é: " + valor);
+				lblMostrarTotal.setText("O valor total é: R$" + valor);
 //				ArrayList<Pedido> p = new ArrayList<Pedido>();
 //				try {
 //					p = Fachada.listarPedidos();
@@ -841,56 +970,51 @@ public class DeliveryApp {
 		//CLIENTE
 		//panel_clientes
 		JLabel lblClientes = new JLabel("Clientes");
-		lblClientes.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		lblClientes.setBounds(363, 18, 220, 56);
+		lblClientes.setFont(new Font("Ubuntu Mono", Font.PLAIN, 54));
+		lblClientes.setBounds(425, 31, 429, 56);
+		//lblClientes.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		//lblClientes.setBounds(504, 18, 220, 56);
 		panel_clientes.add(lblClientes);
 		panel_clientes.setBackground(new Color(239, 156, 166));
 		
-		final JCheckBox chckbxCadastrar_cliente = new JCheckBox("Cadastrar");
-		chckbxCadastrar_cliente.setBounds(348, 91, 113, 25);
-		chckbxCadastrar_cliente.setFocusPainted(false);
-		chckbxCadastrar_cliente.setContentAreaFilled(false);
-		
-		panel_clientes.add(chckbxCadastrar_cliente);
-		
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setFont(new Font("Ubuntu Mono", Font.PLAIN, 20));
-		lblNome.setBounds(110, 158, 76, 31);
+		lblNome.setBounds(102, 242, 76, 31);
 		panel_clientes.add(lblNome);
 		
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setFont(new Font("Ubuntu Mono", Font.PLAIN, 20));
-		lblEmail.setBounds(100, 224, 76, 31);
+		lblEmail.setBounds(90, 342, 76, 31);
 		panel_clientes.add(lblEmail);
 		
 		JLabel lblEndereo = new JLabel("Endere\u00E7o:");
 		lblEndereo.setFont(new Font("Ubuntu Mono", Font.PLAIN, 20));
-		lblEndereo.setBounds(79, 301, 97, 31);
+		lblEndereo.setBounds(69, 441, 97, 31);
 		panel_clientes.add(lblEndereo);
 		
 		JLabel lblTelefone = new JLabel("telefone:");
 		lblTelefone.setFont(new Font("Ubuntu Mono", Font.PLAIN, 20));
-		lblTelefone.setBounds(85, 377, 101, 31);
+		lblTelefone.setBounds(75, 548, 101, 31);
 		panel_clientes.add(lblTelefone);
 		
 		txt_cad_cli_ender = new JTextField();
 		txt_cad_cli_ender.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		txt_cad_cli_ender.setEnabled(false);
 		txt_cad_cli_ender.setColumns(10);
-		txt_cad_cli_ender.setBounds(179, 301, 129, 35);
+		txt_cad_cli_ender.setBounds(169, 441, 282, 35);
 		panel_clientes.add(txt_cad_cli_ender);
 		
 		txt_cad_cli_telefone = new JTextField();
 		txt_cad_cli_telefone.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		txt_cad_cli_telefone.setEnabled(false);
 		txt_cad_cli_telefone.setColumns(10);
-		txt_cad_cli_telefone.setBounds(179, 377, 129, 35);
+		txt_cad_cli_telefone.setBounds(169, 548, 282, 35);
 		panel_clientes.add(txt_cad_cli_telefone);
 		
 		txt_cad_cli_nome = new JTextField();
 		txt_cad_cli_nome.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		txt_cad_cli_nome.setEnabled(false);
-		txt_cad_cli_nome.setBounds(179, 154, 129, 35);
+		txt_cad_cli_nome.setBounds(171, 238, 282, 35);
 		panel_clientes.add(txt_cad_cli_nome);
 		txt_cad_cli_nome.setColumns(10);
 		
@@ -898,62 +1022,59 @@ public class DeliveryApp {
 		txt_cad_cli_email.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		txt_cad_cli_email.setEnabled(false);
 		txt_cad_cli_email.setColumns(10);
-		txt_cad_cli_email.setBounds(179, 220, 129, 35);
+		txt_cad_cli_email.setBounds(169, 338, 282, 35);
 		panel_clientes.add(txt_cad_cli_email);
 		
-		final JButton btn_cadastrar_cliente = new JButton("Cadastrar");
+		final JButton btn_cadastrar_cliente = new JButton("Salvar");
 		btn_cadastrar_cliente.setFont(new Font("Ubuntu Mono", Font.PLAIN, 20));
 		
 		btn_cadastrar_cliente.setEnabled(false);
-		btn_cadastrar_cliente.setBounds(179, 440, 129, 56);
+		btn_cadastrar_cliente.setBounds(175, 637, 276, 56);
 		panel_clientes.add(btn_cadastrar_cliente);
 		
 		final JTextArea txtArea_cliente = new JTextArea();
 		txtArea_cliente.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		txtArea_cliente.setEditable(false);
-		txtArea_cliente.setBounds(490, 158, 313, 338);
+		txtArea_cliente.setBounds(534, 238, 487, 592);
 		panel_clientes.add(txtArea_cliente);
 		
-		final JCheckBox chckbxListar_cliente = new JCheckBox("Listar");
-		chckbxListar_cliente.setFocusPainted(false);
-		chckbxListar_cliente.setContentAreaFilled(false);
-		chckbxListar_cliente.setBounds(445, 91, 113, 25);
-		panel_clientes.add(chckbxListar_cliente);
+		JButton btn_clientes_cadastrar = new JButton("Cadastrar");
 		
-		chckbxListar_cliente.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(chckbxListar_cliente.isSelected()) {
-					String clien = "";
-					ArrayList<Cliente> c = new ArrayList<Cliente>();
-					c = Fachada.listarClientes();
-					
-					for(Cliente cli : c) {
-						clien += cli.getNome() + " tem " + cli.getTotalPedidos() + " pedido(s)." + "\n";
-					}
-					txtArea_cliente.setText(clien);
-				}else {
-					txtArea_cliente.setText("");
-				}
+		btn_clientes_cadastrar.setForeground(Color.BLACK);
+		btn_clientes_cadastrar.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		btn_clientes_cadastrar.setFocusPainted(false);
+		btn_clientes_cadastrar.setContentAreaFilled(false);
+		btn_clientes_cadastrar.setBounds(169, 105, 259, 65);
+		panel_clientes.add(btn_clientes_cadastrar);
+		
+		JButton btnListar_1 = new JButton("Listar");
+		
+		btnListar_1.setForeground(Color.BLACK);
+		btnListar_1.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		btnListar_1.setContentAreaFilled(false);
+		btnListar_1.setBounds(666, 105, 259, 65);
+		panel_clientes.add(btnListar_1);
+		
+		btn_clientes_cadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				txt_cad_cli_nome.setEnabled(true);
+				txt_cad_cli_telefone.setEnabled(true);
+				txt_cad_cli_ender.setEnabled(true);
+				txt_cad_cli_email.setEnabled(true);
+				btn_cadastrar_cliente.setEnabled(true);
 			}
 		});
 		
-		chckbxCadastrar_cliente.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(chckbxCadastrar_cliente.isSelected()) {
-					txt_cad_cli_nome.setEnabled(true);
-					txt_cad_cli_telefone.setEnabled(true);
-					txt_cad_cli_ender.setEnabled(true);
-					txt_cad_cli_email.setEnabled(true);
-					btn_cadastrar_cliente.setEnabled(true);
-				}else {
-					txt_cad_cli_nome.setEnabled(false);
-					txt_cad_cli_telefone.setEnabled(false);
-					txt_cad_cli_ender.setEnabled(false);
-					txt_cad_cli_email.setEnabled(false);
-					btn_cadastrar_cliente.setEnabled(false);
+		btnListar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String clien = "";
+				ArrayList<Cliente> c = new ArrayList<Cliente>();
+				c = Fachada.listarClientes();
+				
+				for(Cliente cli : c) {
+					clien += cli.getNome() + " tem " + cli.getTotalPedidos() + " pedido(s)." + "\n";
 				}
+				txtArea_cliente.setText(clien);
 			}
 		});
 		
@@ -963,7 +1084,6 @@ public class DeliveryApp {
 				String cadEmail = txt_cad_cli_email.getText();
 				String cadEndereco = txt_cad_cli_ender.getText();
 				String cadTelefone = txt_cad_cli_telefone.getText();
-				System.out.println("The values were: " + cadNome + " " + cadEmail + " " + cadTelefone + " " + cadEndereco);
 				try {
 					Cliente c = Fachada.cadastrarCliente(cadNome, cadTelefone, cadEmail, cadEndereco);
 					txtArea_cliente.setText("O cliente " + c.getNome() + " foi criado com sucesso!");
@@ -979,32 +1099,27 @@ public class DeliveryApp {
 		//PRODUTOS
 		//panel_produtos
 		JLabel lblProdutos = new JLabel("Produtos");
-		lblProdutos.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		lblProdutos.setBounds(363, 18, 220, 56);
+		lblProdutos.setFont(new Font("Ubuntu Mono", Font.PLAIN, 54));
+		lblProdutos.setBounds(425, 31, 429, 56);
+		//lblProdutos.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		//lblProdutos.setBounds(363, 18, 220, 56);
 		panel_produtos.add(lblProdutos);
 		panel_produtos.setBackground(new Color(239, 156, 166));
 		
-		final JCheckBox chckbxCadastrar_produto = new JCheckBox("Cadastrar");
-		chckbxCadastrar_produto.setBounds(348, 91, 113, 25);
-		chckbxCadastrar_produto.setFocusPainted(false);
-		chckbxCadastrar_produto.setContentAreaFilled(false);
-		
-		panel_produtos.add(chckbxCadastrar_produto);
-		
 		JLabel lblNomeProd = new JLabel("Nome:");
 		lblNomeProd.setFont(new Font("Ubuntu Mono", Font.PLAIN, 20));
-		lblNomeProd.setBounds(110, 158, 76, 31);
+		lblNomeProd.setBounds(135, 204, 76, 31);
 		panel_produtos.add(lblNomeProd);
 		
 		JLabel lblPrecoProd = new JLabel("Preço:");
 		lblPrecoProd.setFont(new Font("Ubuntu Mono", Font.PLAIN, 20));
-		lblPrecoProd.setBounds(100, 224, 76, 31);
+		lblPrecoProd.setBounds(125, 270, 76, 31);
 		panel_produtos.add(lblPrecoProd);
 		
 		final JTextField txt_cad_prod_nome = new JTextField();
 		txt_cad_prod_nome.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		txt_cad_prod_nome.setEnabled(false);
-		txt_cad_prod_nome.setBounds(188, 153, 129, 35);
+		txt_cad_prod_nome.setBounds(213, 199, 241, 35);
 		panel_produtos.add(txt_cad_prod_nome);
 		txt_cad_prod_nome.setColumns(10);
 				
@@ -1012,91 +1127,89 @@ public class DeliveryApp {
 		txt_cad_prod_preco.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		txt_cad_prod_preco.setEnabled(false);
 		txt_cad_prod_preco.setColumns(10);
-		txt_cad_prod_preco.setBounds(188, 219, 129, 35);
+		txt_cad_prod_preco.setBounds(213, 265, 241, 35);
 		panel_produtos.add(txt_cad_prod_preco);
 		
-		final JButton btn_cadastrar_produto = new JButton("Cadastrar");
+		final JButton btn_cadastrar_produto = new JButton("Salvar");
 		btn_cadastrar_produto.setFont(new Font("Ubuntu Mono", Font.PLAIN, 20));
 		
 		btn_cadastrar_produto.setEnabled(false);
-		btn_cadastrar_produto.setBounds(188, 290, 129, 56);
+		btn_cadastrar_produto.setBounds(213, 336, 241, 56);
 		panel_produtos.add(btn_cadastrar_produto);
 		
 		final JTextArea txtArea_produto = new JTextArea();
 		txtArea_produto.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		txtArea_produto.setEditable(false);
-		txtArea_produto.setBounds(457, 188, 347, 338);
+		txtArea_produto.setBounds(526, 231, 522, 563);
 		panel_produtos.add(txtArea_produto);
-		
-		final JCheckBox chckbxListar_produto = new JCheckBox("Listar");
-		chckbxListar_produto.setFocusPainted(false);
-		chckbxListar_produto.setContentAreaFilled(false);
-		chckbxListar_produto.setBounds(445, 91, 113, 25);
-		panel_produtos.add(chckbxListar_produto);
 		
 		filtrar_prod = new JTextField();
 		filtrar_prod.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		filtrar_prod.setEnabled(false);
 		filtrar_prod.setColumns(10);
-		filtrar_prod.setBounds(588, 140, 148, 35);
+		filtrar_prod.setBounds(674, 183, 280, 35);
 		panel_produtos.add(filtrar_prod);
 		
 		JLabel lblFiltrarPorNome = new JLabel("Filtrar nome:");
 		lblFiltrarPorNome.setFont(new Font("Ubuntu Mono", Font.PLAIN, 20));
-		lblFiltrarPorNome.setBounds(457, 145, 136, 31);
+		lblFiltrarPorNome.setBounds(526, 188, 136, 31);
 		panel_produtos.add(lblFiltrarPorNome);
 		
 		final JButton btn_filtrar_prod_Ok = new JButton("OK");
-		btn_filtrar_prod_Ok.setBounds(741, 140, 69, 35);
+		btn_filtrar_prod_Ok.setBounds(966, 183, 69, 35);
 		panel_produtos.add(btn_filtrar_prod_Ok);
 		
-		chckbxListar_produto.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(chckbxListar_produto.isSelected()) {
-					filtrar_prod.setEnabled(true);
-					
-					btn_filtrar_prod_Ok.addMouseListener(new MouseAdapter() {
-						@Override
-						public void mouseClicked(MouseEvent e) {
-							String produ = "";
-							String nomeProdu = filtrar_prod.getText();
-							ArrayList<Produto> p = new ArrayList<Produto>();
+		JButton btn_prod_cad = new JButton("Cadastrar");
+		
+		btn_prod_cad.setForeground(Color.BLACK);
+		btn_prod_cad.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		btn_prod_cad.setFocusPainted(false);
+		btn_prod_cad.setContentAreaFilled(false);
+		btn_prod_cad.setBounds(169, 105, 259, 65);
+		panel_produtos.add(btn_prod_cad);
+		
+		JButton btn_prod_list = new JButton("Listar");
+		
+		btn_prod_list.setForeground(Color.BLACK);
+		btn_prod_list.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		btn_prod_list.setContentAreaFilled(false);
+		btn_prod_list.setBounds(666, 105, 259, 65);
+		panel_produtos.add(btn_prod_list);
+		
+		btn_prod_list.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				filtrar_prod.setEnabled(true);
+				
+				btn_filtrar_prod_Ok.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						String produ = "";
+						String nomeProdu = filtrar_prod.getText();
+						ArrayList<Produto> p = new ArrayList<Produto>();
 
-							if(nomeProdu != "") {
-								p = Fachada.listarProdutos(nomeProdu);
-								if(p.size() == 0) {
-									p = Fachada.listarProdutos();
-								}
-							}else {
+						if(nomeProdu != "") {
+							p = Fachada.listarProdutos(nomeProdu);
+							if(p.size() == 0) {
 								p = Fachada.listarProdutos();
 							}
-			
-							for(Produto prd : p) {
-								produ += prd.getNome() + " valor " + prd.getPreco() + "\n";
-							}
-							txtArea_produto.setText(produ);
+						}else {
+							p = Fachada.listarProdutos();
 						}
-						});
-					
-				}else {
-					txtArea_produto.setText("");
-				}
+		
+						for(Produto prd : p) {
+							produ += prd.getNome() + " valor " + prd.getPreco() + "\n";
+						}
+						txtArea_produto.setText(produ);
+					}
+					});
 			}
 		});
 		
-		chckbxCadastrar_produto.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(chckbxCadastrar_produto.isSelected()) {
-					txt_cad_prod_preco.setEnabled(true);
-					txt_cad_prod_nome.setEnabled(true);
-					btn_cadastrar_produto.setEnabled(true);
-				}else {
-					txt_cad_prod_preco.setEnabled(false);
-					txt_cad_prod_nome.setEnabled(false);
-					btn_cadastrar_produto.setEnabled(false);
-				}
+		btn_prod_cad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txt_cad_prod_preco.setEnabled(true);
+				txt_cad_prod_nome.setEnabled(true);
+				btn_cadastrar_produto.setEnabled(true);
 			}
 		});
 		
