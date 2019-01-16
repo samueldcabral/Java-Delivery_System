@@ -39,14 +39,12 @@ public class Pedido {
 	}
 	
 	public void remover(String nome_produto) {
-		int index=0;
 		for(Produto p : produtos) {
 			if(p.getNome() == nome_produto) {
-				index = p.getId();
-				System.out.println("The id here is " + index);
+				produtos.remove(p);
+				break;
 			}
 		}
-		produtos.remove(index);
 	}
 
 	public Produto localizar(String nome){
@@ -72,6 +70,7 @@ public class Pedido {
 	
 
 	public double getTotal() {
+		total = 0;
 		for(Produto p : produtos) {
 			total += p.getPreco();
 		}
