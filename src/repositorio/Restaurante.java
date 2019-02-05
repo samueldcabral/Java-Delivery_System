@@ -5,6 +5,7 @@ package repositorio;
  * Prof. Fausto Maranhão Ayres
  **********************************/
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import modelo.Cliente;
 import modelo.Pedido;
@@ -13,7 +14,8 @@ import modelo.Produto;
 public class Restaurante {
 	private ArrayList<Produto> produtos = new ArrayList<Produto>();
 	private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
-	private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+//	private ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+	private TreeMap<String, Cliente> clientes = new TreeMap<>();
 
    //----------------------------------------------------------------------------
 	
@@ -43,27 +45,30 @@ public class Restaurante {
 	//----------------------------------------------------------------------------
 	
 	public void adicionar(Cliente c){
-		clientes.add(c);
+//		clientes.add(c);
+		clientes.put(c.getTelefone(), c);
 	}
 	public void remover(Cliente c){
-		clientes.remove(c);
+//		clientes.remove(c);
+		clientes.remove(c.getTelefone());
 	}
 
-	public Cliente localizarClienteNome(String nome){
-		for(Cliente c : clientes){
-			if(c.getNome().equals(nome))
-				return c;
-		}
-		return null;
-	}
-	
-	public Cliente localizarCliente(String telefone){
-		for(Cliente c : clientes){
-			if(c.getTelefone().equals(telefone))
-				return c;
-		}
-		return null;
-	}
+//	TODO update these methods
+//	public Cliente localizarClienteNome(String nome){
+//		for(Cliente c : clientes){
+//			if(c.getNome().equals(nome))
+//				return c;
+//		}
+//		return null;
+//	}
+//	
+//	public Cliente localizarCliente(String telefone){
+//		for(Cliente c : clientes){
+//			if(c.getTelefone().equals(telefone))
+//				return c;
+//		}
+//		return null;
+//	}
 	
 	//----------------------------------------------------------------------------
 	public void adicionar(Pedido p){
@@ -105,7 +110,8 @@ public class Restaurante {
 	
 	public ArrayList<Pedido> getPedidos(String telefone) {
 		ArrayList<Pedido> pedidosCliente = new ArrayList<Pedido>();
-		Cliente c = this.localizarCliente(telefone);
+//		TODO localizar
+//		Cliente c = this.localizarCliente(telefone);
 		if(c == null)
 			return null;
 		
@@ -119,6 +125,7 @@ public class Restaurante {
 			return null;
 	}
 	
+//	TODO update method
 	public ArrayList<Cliente> getClientes(){
 		return clientes;
 	}
