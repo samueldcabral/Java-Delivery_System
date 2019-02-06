@@ -5,6 +5,7 @@ package repositorio;
  * Prof. Fausto Maranhão Ayres
  **********************************/
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.TreeMap;
 
 import modelo.Cliente;
@@ -34,6 +35,15 @@ public class Restaurante {
 		return null;
 	}
 	
+	public Produto localizarProduto(int id) {
+		for(Produto p : produtos) {
+			if(p.getId() == id) {
+				return p;
+			}
+		}
+		return null;
+	}
+	
 	public ArrayList<Produto> localizarTodosProduto(String nome){
 		ArrayList<Produto> produtos = new ArrayList<Produto>();
 		for(Produto p : produtos){
@@ -53,22 +63,21 @@ public class Restaurante {
 		clientes.remove(c.getTelefone());
 	}
 
-//	TODO update these methods
-//	public Cliente localizarClienteNome(String nome){
-//		for(Cliente c : clientes){
-//			if(c.getNome().equals(nome))
-//				return c;
-//		}
-//		return null;
-//	}
-//	
-//	public Cliente localizarCliente(String telefone){
-//		for(Cliente c : clientes){
-//			if(c.getTelefone().equals(telefone))
-//				return c;
-//		}
-//		return null;
-//	}
+	public Cliente localizarClienteNome(String nome){
+		for(Cliente c : clientes.values()){
+			if(c.getNome().equals(nome))
+				return c;
+		}
+		return null;
+	}
+	
+	public Cliente localizarCliente(String telefone){
+		for(Cliente c : clientes.values()){
+			if(c.getTelefone().equals(telefone))
+				return c;
+		}
+		return null;
+	}
 	
 	//----------------------------------------------------------------------------
 	public void adicionar(Pedido p){
@@ -93,6 +102,7 @@ public class Restaurante {
 	//----------------------------------------------------------------------------
 
 	public ArrayList<Produto> getProdutos() {
+		Collections.sort(produtos);
 		return produtos;
 	}
 	
@@ -110,8 +120,8 @@ public class Restaurante {
 	
 	public ArrayList<Pedido> getPedidos(String telefone) {
 		ArrayList<Pedido> pedidosCliente = new ArrayList<Pedido>();
-//		TODO localizar
-//		Cliente c = this.localizarCliente(telefone);
+
+		Cliente c = this.localizarCliente(telefone);
 		if(c == null)
 			return null;
 		
@@ -125,8 +135,7 @@ public class Restaurante {
 			return null;
 	}
 	
-//	TODO update method
-	public ArrayList<Cliente> getClientes(){
+	public TreeMap<String, Cliente> getClientes(){
 		return clientes;
 	}
 
@@ -139,8 +148,6 @@ public class Restaurante {
 	public int getTotalClientes() {
 		return clientes.size();
 	}
-
-
 
 }
 

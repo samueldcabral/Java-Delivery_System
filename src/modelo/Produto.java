@@ -5,7 +5,7 @@ package modelo;
  * Prof. Fausto Maranhão Ayres
  **********************************/
 
-public class Produto {
+public class Produto implements Comparable<Produto>{
 		private int id;
 		private String nome;
 		private double preco;
@@ -48,6 +48,11 @@ public class Produto {
 			return "Produto [" + (nome != null ? "nome=" + nome + ", " : "")
 					+ "preco=" + preco + ", "
 					+ "]";
+		}
+
+		@Override
+		public int compareTo(Produto outro) {
+			return this.getNome().compareTo(outro.getNome());
 		}
 		
 	

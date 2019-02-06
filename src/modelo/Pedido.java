@@ -16,12 +16,17 @@ public class Pedido {
 	private boolean fechado;
 	private ArrayList<Produto> produtos = new ArrayList<Produto>();
 	private Cliente cliente;
+	private final int taxaEntrega = 10;
 	
 	public Pedido(int id) {
 		super();
 		this.id = id;
 	}
 	
+	public int getTaxaEntrega() {
+		return taxaEntrega;
+	}
+
 	public LocalDateTime getData() {
 		return data;
 	}
@@ -40,7 +45,16 @@ public class Pedido {
 	
 	public void remover(String nome_produto) {
 		for(Produto p : produtos) {
-			if(p.getNome() == nome_produto) {
+			if(p.getNome().equals(nome_produto)) {
+				produtos.remove(p);
+				break;
+			}
+		}
+	}
+	
+	public void remover(int idProduto) {
+		for(Produto p : produtos) {
+			if(p.getId() == idProduto) {
 				produtos.remove(p);
 				break;
 			}
@@ -74,7 +88,7 @@ public class Pedido {
 		for(Produto p : produtos) {
 			total += p.getPreco();
 		}
-		return total;
+		return total + taxaEntrega;
 	}
 
 	public void setTotal(double total) {
@@ -121,6 +135,8 @@ public class Pedido {
 		else 	
 			for(Produto p: produtos) 
 				texto += " - " + p.getNome() + " R$" + p.getPreco();
+		
+		texto += ", Taxa de Entrega: " + this.getTaxaEntrega();
 		texto += ", Status:";
 		if(fechado)
 			texto += "Fechado";

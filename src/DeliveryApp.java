@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.TreeMap;
 import java.util.Vector;
 
 import javax.swing.JTextField;
@@ -1031,10 +1032,10 @@ public class DeliveryApp {
 		btnListar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String clien = "";
-				ArrayList<Cliente> c = new ArrayList<Cliente>();
+				TreeMap<String, Cliente> c = new TreeMap<String,Cliente>();
 				c = Fachada.listarClientes();
 				
-				for(Cliente cli : c) {
+				for(Cliente cli : c.values()) {
 					clien += cli.getNome() + " tem " + cli.getTotalPedidos() + " pedido(s)." + "\n";
 				}
 				txtArea_cliente.setText(clien);
@@ -1149,8 +1150,8 @@ public class DeliveryApp {
 						String produ = "";
 						String nomeProdu = filtrar_prod.getText();
 						ArrayList<Produto> p = new ArrayList<Produto>();
-
-						if(nomeProdu != "") {
+						
+						if(!nomeProdu.equals("")) {
 							p = Fachada.listarProdutos(nomeProdu);
 							if(p.size() == 0) {
 								p = Fachada.listarProdutos();

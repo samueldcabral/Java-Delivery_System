@@ -2,10 +2,13 @@ package fachada;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.TreeMap;
 
 import assets.JavaMail;
 import assets.pdf;
 import modelo.Cliente;
+import modelo.Combo;
 import modelo.Pedido;
 import modelo.Produto;
 import repositorio.Restaurante;
@@ -34,7 +37,7 @@ public class Fachada {
 		return restaurante.getProdutos(nome);
 	}
 
-	public static ArrayList<Cliente> listarClientes() {
+	public static TreeMap<String, Cliente> listarClientes() {
 		return restaurante.getClientes();
 	}
 
@@ -108,7 +111,7 @@ public class Fachada {
 	
 	//-----------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------
-	
+	//a few modifications
 	public static void adicionarProdutoPedido(String nome_cliente, String nome_produto, String nome_entregador) throws  Exception {	
 
 		Cliente cli = restaurante.localizarClienteNome(nome_cliente);
@@ -123,6 +126,24 @@ public class Fachada {
 		if(produto == null)
 			throw new Exception("inclusao no pedido - produto nao cadastrado:" + nome_produto);
 		pedido.setEntregador(nome_entregador);
+		pedido.adicionar(produto); 
+	//	produto.adicionar(pedido);
+	}
+	
+	public static void adicionarProdutoPedido(String telefone, int idProduto) throws  Exception {	
+
+		Cliente cli = restaurante.localizarCliente(telefone);
+		if(cli == null) 
+			throw new Exception("inclusao no pedido - cliente nao cadastrado: " + telefone);
+	
+		Pedido pedido = cli.obterPedidoAberto();
+		if(pedido == null) 
+			throw new Exception("inclusao no pedido - nao existe pedido aberto do cliente: " + telefone);
+
+		Produto produto = restaurante.localizarProduto(idProduto);
+		if(produto == null)
+			throw new Exception("inclusao no pedido - produto nao cadastrado: " + idProduto);
+		pedido.setEntregador("Entregador Padrao");
 		pedido.adicionar(produto); 
 	//	produto.adicionar(pedido);
 	}
@@ -142,10 +163,21 @@ public class Fachada {
 		pedido.remover(nome_produto);
 	}
 	
+	public static void removerProdutoPedido(String telefone, int idProduto) throws Exception{
+		Cliente cli = restaurante.localizarCliente(telefone);
+		if(cli == null) 
+			throw new Exception("inclusao no pedido - cliente nao cadastrado: " + telefone);
+	
+		Pedido pedido = cli.obterPedidoAberto();
+		if(pedido == null) 
+			throw new Exception("inclusao no pedido - nao existe pedido aberto do cliente: " + telefone);
+
+		pedido.remover(idProduto);
+	}
 	//-----------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------
 	
-	public static Pedido pedido(String telefone) throws Exception {
+	public static Pedido consultarPedido(String telefone) throws Exception {
 		Cliente c = restaurante.localizarCliente(telefone);
 		if(c == null) 
 			throw new Exception("inclusao no pedido - cliente nao cadastrado.");
@@ -198,6 +230,8 @@ public class Fachada {
 		ArrayList<Pedido> pedidos = restaurante.getPedidos();
 		
 		for(Pedido p : pedidos) {
+			//System.out.println("pedido\n" + p.getTotal());
+			//System.out.println(p);
 			if(p.getData().getDayOfMonth() == data.getDayOfMonth()) {
 				valorTotal += p.getTotal();
 			}
@@ -205,7 +239,41 @@ public class Fachada {
 		return valorTotal;
 	}
 	
+	public static double calcularArrecadacao(int dia) {
+		double valorTotal = 0;
+		ArrayList<Pedido> pedidos = restaurante.getPedidos();
+		
+		for(Pedido p : pedidos) {
+			//System.out.println("pedido\n" + p.getTotal());
+			//System.out.println(p);
+			if(p.getData().getDayOfMonth() == dia) {
+				valorTotal += p.getTotal();
+			}
+		}
+		return valorTotal;
+	}
 	
+	//-----------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------
+	public static Combo criarCombo(String nome, List<Integer> ids) throws Exception {
+		idproduto++;
+		ArrayList<Produto> prods = new ArrayList<>();
+		Produto p;
+		
+		Produto aux = restaurante.localizarProduto(nome);
+		if (aux!=null)
+			throw new Exception("cadastrar produto: produto ja cadastrado: " + nome);
+		
+		for(int i : ids) {
+			p = restaurante.localizarProduto(i);
+			prods.add(p);
+		}
+		
+		Combo c = new Combo(idproduto, nome, 0.0, prods);
+		restaurante.adicionar(c);
+		return c;
+		
+	}
 	
 	
 	

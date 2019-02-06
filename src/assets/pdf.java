@@ -54,7 +54,7 @@ public class pdf {
 						document.add(new Paragraph(prod.getNome() + " \t \t R$" + prod.getPreco()));
 						document.add(new Paragraph("----------------------------------------------------------"));
 					}
-					
+					document.add(new Paragraph("Taxa de Entrega: " + pe.getTaxaEntrega()));
 					document.add(new Paragraph("Valor Total do Pedido: " + pe.getTotal()));
 				}
 			}
