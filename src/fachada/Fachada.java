@@ -259,6 +259,7 @@ public class Fachada {
 		idproduto++;
 		ArrayList<Produto> prods = new ArrayList<>();
 		Produto p;
+		double preco = 0.0;
 		
 		Produto aux = restaurante.localizarProduto(nome);
 		if (aux!=null)
@@ -267,25 +268,35 @@ public class Fachada {
 		for(int i : ids) {
 			p = restaurante.localizarProduto(i);
 			prods.add(p);
+			preco += p.getPreco();
 		}
-		
-		Combo c = new Combo(idproduto, nome, 0.0, prods);
+	
+		Combo c = new Combo(idproduto, nome, preco, prods);
 		restaurante.adicionar(c);
 		return c;
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//-----------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------
+	public static void excluirPedido(int idPedido) throws Exception{
+		Pedido p = restaurante.localizarPedido(idPedido);
+		
+		if(p == null) throw new Exception("Pedido nao existe!");
+		
+		if(!p.isFechado()) throw new Exception("Pedido não fechado");
+		
+		Cliente c = restaurante.localizarClienteViaPedido(p);
+		
+		if(c == null) throw new Exception("Pedido nao possui clientes");
+		
+		p.setProdutos("cancelar");
+		p.setCliente("cancelar");
+		c.cancelarPedido(p);
+		restaurante.remover(p);
+		
+		
+	}
 	
 	
 	

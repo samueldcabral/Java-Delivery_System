@@ -160,7 +160,13 @@ public class Teste2 {
 		System.out.println("\nExcluir pedido 1");
 		
 //		TODO create this method
-		//Fachada.excluirPedido(1);
+		try {
+			Fachada.excluirPedido(1);
+			System.out.println("SAM SAM SAM SAM SAM");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println(pedidos);
 		
 	}

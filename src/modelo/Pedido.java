@@ -125,6 +125,12 @@ public class Pedido {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	
+	public void setCliente(String c) {
+		if(c.equals("cancelar")) {
+			this.cliente = null;
+		}
+	}
 
 	@Override
 	public String toString() {
@@ -152,7 +158,13 @@ public class Pedido {
 	public void setProdutos(ArrayList<Produto> produtos) {
 		this.produtos = produtos;
 	}
-
+	
+	public void setProdutos(String status) {
+		if(status.equals("cancelar")) {
+			this.produtos.clear();
+		}
+	}
+	
 
 }
 	

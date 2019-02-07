@@ -2,6 +2,7 @@ package assets;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -13,6 +14,7 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import modelo.Cliente;
+import modelo.Combo;
 import modelo.Pedido;
 import modelo.Produto;
 
@@ -50,12 +52,25 @@ public class pdf {
 					document.add(new Paragraph("Quantidade" + " \t \t \t " + "Preço"));	
 					document.add(new Paragraph("----------------------------------------------------------"));
 					
+					DecimalFormat numberFormat = new DecimalFormat("#.00"); 
+					
 					for(Produto prod : produtos) {
-						document.add(new Paragraph(prod.getNome() + " \t \t R$" + prod.getPreco()));
-						document.add(new Paragraph("----------------------------------------------------------"));
+						if(prod instanceof Combo) {
+							document.add(new Paragraph(prod.getNome() + " \t \t R$" + numberFormat.format(prod.getPreco()) + "\nItens do Combo: "));
+
+							for(Produto produt : ((Combo) prod).getComponentes()) {
+								document.add(new Paragraph("\t \t" + produt.getNome() + " R$: " + numberFormat.format(produt.getPreco())));
+							}
+							document.add(new Paragraph("----------------------------------------------------------"));
+
+						}else {
+							document.add(new Paragraph(prod.getNome() + " \t \t R$" + numberFormat.format(prod.getPreco())));
+							document.add(new Paragraph("----------------------------------------------------------"));
+						}
+						
 					}
 					document.add(new Paragraph("Taxa de Entrega: " + pe.getTaxaEntrega()));
-					document.add(new Paragraph("Valor Total do Pedido: " + pe.getTotal()));
+					document.add(new Paragraph("Valor Total do Pedido: " + numberFormat.format(pe.getTotal())));
 				}
 			}
 

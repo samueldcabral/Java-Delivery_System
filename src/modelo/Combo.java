@@ -5,12 +5,11 @@ import java.util.ArrayList;
 public class Combo extends Produto{
 	private ArrayList<Produto> componentes = new ArrayList<Produto>();
 	private double total;
-	private String nomeCombo;
-	private final double desconto = 0.9;
+	//private String nomeCombo;
+	private final static double desconto = 0.9;
 	
 	public Combo(int id, String nome, double preco, ArrayList<Produto> prods) {
-		super(id, nome, preco);
-		this.setNomeCombo(nome);
+		super(id, nome, preco*desconto);
 		this.setComponentes(prods);
 	}
 	
@@ -24,7 +23,7 @@ public class Combo extends Produto{
 	
 	@Override
 	public String toString() {
-		return "Combo [nomeCombo =" + nomeCombo +", Componentes = " + componentes + ", total com desconto = " + this.getPreco() + ", valor desconto = " + desconto*100 + "% ]";
+		return "Combo [nomeCombo =" + this.getNome() +", Componentes = " + componentes + ", total com desconto = " + this.getPreco() + ", valor desconto = " + desconto*100 + "% ]";
 	}
 
 	public ArrayList<Produto> getComponentes() {
@@ -35,12 +34,12 @@ public class Combo extends Produto{
 		this.componentes = componentes;
 	}
 
-	public String getNomeCombo() {
-		return nomeCombo;
-	}
-
-	public void setNomeCombo(String nomeCombo) {
-		this.nomeCombo = nomeCombo;
-	}
+//	public String getNomeCombo() {
+//		return nomeCombo;
+//	}
+//
+//	public void setNomeCombo(String nomeCombo) {
+//		this.nomeCombo = nomeCombo;
+//	}
 
 }

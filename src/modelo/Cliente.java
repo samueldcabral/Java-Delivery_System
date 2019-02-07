@@ -15,6 +15,15 @@ public class Cliente {
 	public int getTotalPedidos() {
 		return pedidos.size();
 	}
+	
+	public Boolean localizarPedido(Pedido p) {
+		for(Pedido ped : this.pedidos) {
+			if(ped.getId() == p.getId()) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public Cliente(String nome, String telefone, String email, String endereco) {
 		super();

@@ -21,6 +21,7 @@ import com.itextpdf.awt.geom.AffineTransform;
 
 import fachada.Fachada;
 import modelo.Cliente;
+import modelo.Combo;
 import modelo.Pedido;
 import modelo.Produto;
 
@@ -30,8 +31,10 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 import java.util.Vector;
 
@@ -65,6 +68,9 @@ public class DeliveryApp {
 	private JTextField filtrar_prod;
 	private JTextField txt_abrir_adc_tel;
 	private JTextField txt_abrir_rm_tel;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
 
 	/**
 	 * Launch the application.
@@ -426,7 +432,7 @@ public class DeliveryApp {
 		txt_filtrar_ped.setLineWrap(true);
 		txt_filtrar_ped.setColumns(3);
 		txt_filtrar_ped.setFont(new Font("Monospaced", Font.BOLD, 20));
-		txt_filtrar_ped.setBounds(138, 134, 826, 547);
+		txt_filtrar_ped.setBounds(138, 134, 826, 425);
 		panel_pedidos_listar.add(txt_filtrar_ped);
 		
 			
@@ -434,6 +440,35 @@ public class DeliveryApp {
 		lblTelxxxxxxxx.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		lblTelxxxxxxxx.setBounds(216, 75, 131, 37);
 		panel_pedidos_listar.add(lblTelxxxxxxxx);
+		
+		JLabel lblDigiteIdDo = new JLabel("Digite Id do pedido fechado para cancelar:");
+		lblDigiteIdDo.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		lblDigiteIdDo.setBounds(189, 574, 460, 37);
+		panel_pedidos_listar.add(lblDigiteIdDo);
+		
+		textField_2 = new JTextField();
+		textField_2.setText("");
+		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		textField_2.setEnabled(true);
+		textField_2.setColumns(10);
+		textField_2.setBounds(189, 624, 317, 35);
+		panel_pedidos_listar.add(textField_2);
+		
+		JButton button_1 = new JButton("OK");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int retirar = Integer.parseInt(textField_2.getText());
+				try {
+					Fachada.excluirPedido(retirar);
+					txt_filtrar_ped.setText("Pedido cancelado com sucesso!");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		button_1.setBounds(518, 624, 74, 35);
+		panel_pedidos_listar.add(button_1);
 		
 		
 		btn_filtrar_pedido_Ok.addActionListener(new ActionListener() {
@@ -645,7 +680,7 @@ public class DeliveryApp {
 					lbl_adc_status.setText("STATUS: Adicionado!");
 					
 					ArrayList<Produto> prods = new ArrayList<Produto>();
-					Pedido ped = Fachada.pedido(tel);
+					Pedido ped = Fachada.abrirPedido(tel);
 					
 		    		prods = ped.getProdutos();
 		   
@@ -739,13 +774,12 @@ public class DeliveryApp {
 				
 				try {
 					c = Fachada.localizarCliente(telefone);
-					p = Fachada.pedido(telefone);
-					
+					p = Fachada.consultarPedido(telefone);
+										
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 				String texto = "Nome: " + c.getNome() + "\nPedido: " + p;
 				final int idPedido = p.getId();
 				consultar_txt_field.setText(texto);
@@ -1102,6 +1136,7 @@ public class DeliveryApp {
 		panel_produtos.add(btn_cadastrar_produto);
 		
 		final JTextArea txtArea_produto = new JTextArea();
+		txtArea_produto.setLineWrap(true);
 		txtArea_produto.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		txtArea_produto.setEditable(false);
 		txtArea_produto.setBounds(526, 231, 522, 563);
@@ -1140,6 +1175,49 @@ public class DeliveryApp {
 		btn_prod_list.setBounds(666, 105, 259, 65);
 		panel_produtos.add(btn_prod_list);
 		
+		JButton btnCadastrarCombo = new JButton("Cadastrar Combo:");
+		btnCadastrarCombo.setForeground(Color.BLACK);
+		btnCadastrarCombo.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
+		btnCadastrarCombo.setFocusPainted(false);
+		btnCadastrarCombo.setContentAreaFilled(false);
+		btnCadastrarCombo.setBounds(85, 429, 429, 65);
+		panel_produtos.add(btnCadastrarCombo);
+		
+		JLabel label_1 = new JLabel("Nome:");
+		label_1.setFont(new Font("Ubuntu Mono", Font.PLAIN, 20));
+		label_1.setBounds(135, 506, 76, 31);
+		panel_produtos.add(label_1);
+		
+		textField = new JTextField();
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		textField.setEnabled(false);
+		textField.setColumns(10);
+		textField.setBounds(213, 501, 241, 35);
+		panel_produtos.add(textField);
+		
+		JLabel lblIdsDosProdutos = new JLabel("Ids dos produtos:");
+		lblIdsDosProdutos.setFont(new Font("Ubuntu Mono", Font.PLAIN, 20));
+		lblIdsDosProdutos.setBounds(25, 570, 186, 31);
+		panel_produtos.add(lblIdsDosProdutos);
+		
+		textField_1 = new JTextField();
+		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		textField_1.setEnabled(false);
+		textField_1.setColumns(10);
+		textField_1.setBounds(213, 565, 241, 35);
+		panel_produtos.add(textField_1);
+		
+		JLabel lblInserirCadaId = new JLabel("Inserir cada ID separado por virgula");
+		lblInserirCadaId.setFont(new Font("Ubuntu Mono", Font.PLAIN, 20));
+		lblInserirCadaId.setBounds(25, 597, 403, 31);
+		panel_produtos.add(lblInserirCadaId);
+		
+		final JButton button = new JButton("Salvar");
+		button.setFont(new Font("Ubuntu Mono", Font.PLAIN, 20));
+		button.setEnabled(false);
+		button.setBounds(213, 641, 241, 56);
+		panel_produtos.add(button);
+		
 		btn_prod_list.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				filtrar_prod.setEnabled(true);
@@ -1159,9 +1237,14 @@ public class DeliveryApp {
 						}else {
 							p = Fachada.listarProdutos();
 						}
-		
+						
+						DecimalFormat numberFormat = new DecimalFormat("#.00"); 
 						for(Produto prd : p) {
-							produ += prd.getNome() + " valor " + prd.getPreco() + "\n";
+							if(prd instanceof Combo) {
+								produ += prd.getId() + ":" + prd + " valor " + numberFormat.format(prd.getPreco()) + "\n";
+							}else {
+								produ += prd.getId() + ":" + prd.getNome() + " valor " + prd.getPreco() + "\n";
+							}
 						}
 						txtArea_produto.setText(produ);
 					}
@@ -1177,6 +1260,14 @@ public class DeliveryApp {
 			}
 		});
 		
+		btnCadastrarCombo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField.setEnabled(true);
+				textField_1.setEnabled(true);
+				button.setEnabled(true);
+			}
+		});
+		
 		btn_cadastrar_produto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String cadNome = txt_cad_prod_nome.getText();
@@ -1187,6 +1278,27 @@ public class DeliveryApp {
 				} catch (Exception e) {
 					e.printStackTrace();
 					txtArea_produto.setText("Não foi possível cadastrar o produto!");
+				}
+				
+			}
+		});
+		
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String cadNome = textField.getText();
+				String[] ids = textField_1.getText().split(",");
+				List<Integer> idArr = new ArrayList<>();
+				
+				for(String i : ids) {
+					idArr.add(Integer.parseInt(i));
+				}
+				
+				try {
+					Produto c = Fachada.criarCombo(cadNome, idArr);
+					txtArea_produto.setText("Combo Criado com Sucesso: " + c.getId() + " " + c.getNome());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				
 			}
