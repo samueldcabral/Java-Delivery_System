@@ -501,6 +501,7 @@ public class DeliveryApp {
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					txt_filtrar_ped.setText(e.getMessage());
 				}
 			}
 		});
@@ -534,6 +535,7 @@ public class DeliveryApp {
 						ped = Fachada.listarPedidos(tel);
 					} catch (Exception e) {
 						e.printStackTrace();
+						txt_filtrar_ped.setText(e.getMessage());
 					}
 					
 					for(Pedido p : ped) {
@@ -699,6 +701,7 @@ public class DeliveryApp {
 		    	    
 				} catch (Exception e) {
 					e.printStackTrace();
+					lbl_abrir_status.setText(e.getMessage());
 				}
 				
 				lbl_abrir_status.setText("STATUS: " + "ID: " + p.getId());
@@ -731,6 +734,7 @@ public class DeliveryApp {
 		    	    
 				} catch (Exception e) {
 					e.printStackTrace();
+					lbl_adc_status.setText(e.getMessage());
 				}
 			}
 		});
@@ -747,6 +751,8 @@ public class DeliveryApp {
 					
 				} catch (Exception e) {
 					e.printStackTrace();
+					lbl_rm_status.setText(e.getMessage());
+					
 				}
 			}
 		});
@@ -818,6 +824,7 @@ public class DeliveryApp {
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					consultar_txt_field.setText(e.getMessage());
 				}
 				String texto = "Nome: " + c.getNome() + "\nPedido: " + p;
 				final int idPedido = p.getId();
@@ -833,6 +840,7 @@ public class DeliveryApp {
 							lblStatus.setText("STATUS: Pedido " + idPedido + " Fechado!");
 						} catch (Exception e) {
 							e.printStackTrace();
+							lblStatus.setText(e.getMessage());
 						}
 						
 					}
@@ -848,6 +856,7 @@ public class DeliveryApp {
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+							lblStatus.setText(e.getMessage());
 						}
 					}
 				});
@@ -862,6 +871,7 @@ public class DeliveryApp {
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+							lblStatus.setText(e.getMessage());
 						}
 					}
 				});
@@ -1340,6 +1350,7 @@ public class DeliveryApp {
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					txtArea_produto.setText(e.getMessage());
 				}
 				
 			}
