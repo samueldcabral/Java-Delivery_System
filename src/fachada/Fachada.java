@@ -230,8 +230,6 @@ public class Fachada {
 		ArrayList<Pedido> pedidos = restaurante.getPedidos();
 		
 		for(Pedido p : pedidos) {
-			//System.out.println("pedido\n" + p.getTotal());
-			//System.out.println(p);
 			if(p.getData().getDayOfMonth() == data.getDayOfMonth()) {
 				valorTotal += p.getTotal();
 			}
@@ -244,8 +242,6 @@ public class Fachada {
 		ArrayList<Pedido> pedidos = restaurante.getPedidos();
 		
 		for(Pedido p : pedidos) {
-			//System.out.println("pedido\n" + p.getTotal());
-			//System.out.println(p);
 			if(p.getData().getDayOfMonth() == dia) {
 				valorTotal += p.getTotal();
 			}

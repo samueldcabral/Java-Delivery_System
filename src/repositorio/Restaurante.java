@@ -82,14 +82,9 @@ public class Restaurante {
 	
 	public Cliente localizarCliente(String telefone){
 		for(Cliente c : clientes.values()){
-			//System.out.println("c get telefone " + c.getTelefone());
-			//System.out.println("telefone " + telefone);
-			//System.out.println(c.getTelefone().equals(telefone));
 			if(c.getTelefone().equals(telefone)) {
-				System.out.println("era pra retonrar " + c.getNome() + " " + c.getTelefone());
 				return c;
 			}
-				
 		}
 		return null;
 	}

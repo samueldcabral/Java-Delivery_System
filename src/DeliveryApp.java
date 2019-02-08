@@ -106,10 +106,10 @@ public class DeliveryApp {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initialize() throws IOException {
-		Produto produto;
-		Pedido pedido;
-		Cliente cliente;
-		
+//		Produto produto;
+//		Pedido pedido;
+//		Cliente cliente;
+//		
 		
 		frame = new JFrame();
 		frame.setBounds(200, 45, 1450, 918);
@@ -119,7 +119,6 @@ public class DeliveryApp {
 		JPanel panel_menu = new JPanel();
 		panel_menu.setBorder(new MatteBorder(0, 0, 0, 2, (Color) SystemColor.windowBorder));
 		panel_menu.setBackground(new Color(65, 111, 148));
-		//rgb(35,81,118)
 		panel_menu.setBounds(0, 0, 289, 943);
 		frame.getContentPane().add(panel_menu);
 		panel_menu.setLayout(null);
@@ -350,18 +349,25 @@ public class DeliveryApp {
 			Produto sushiKani = Fachada.cadastrarProduto("Sushi Kani", 19.0);
 			Produto temakiSalmao = Fachada.cadastrarProduto("Temaki Salmao", 20.0);
 			Produto temakiCamarao = Fachada.cadastrarProduto("Temaki Camarão", 21.0);
-			cliente = Fachada.cadastrarCliente("Samuel", "9999-1234", "samuel@samuel.com", "Rua da Lua");
-			cliente = Fachada.cadastrarCliente("Marianna Leite", "9999-4321", "marianna@m.com", "Rua do Pão");
-			pedido = Fachada.abrirPedido("9999-1234");
+			Fachada.cadastrarCliente("Samuel", "9999-1234", "samuel@samuel.com", "Rua da Lua");
+			Fachada.cadastrarCliente("Marianna Leite", "9999-4321", "marianna@m.com", "Rua do Pão");
+			Fachada.abrirPedido("9999-1234");
 			List<Integer> idCombo = new ArrayList<>();
 			idCombo.add(sushiSalmao.getId());
 			idCombo.add(temakiSalmao.getId());
-			Produto Combo1 = Fachada.criarCombo("Combo Salmão", idCombo);
+			Fachada.criarCombo("Combo Salmão", idCombo);
 			
 			idCombo.clear();
 			idCombo.add(sushiCamarao.getId());
 			idCombo.add(temakiCamarao.getId());
-			Produto Combo2 = Fachada.criarCombo("Combo Camarão", idCombo);
+			Fachada.criarCombo("Combo Camarão", idCombo);
+			
+			idCombo.clear();
+			idCombo.add(sushiCamarao.getId());
+			idCombo.add(sushiKani.getId());
+			idCombo.add(sushiSalmao.getId());
+			
+			Fachada.criarCombo("Combo Sushis", idCombo);
 			
 			Fachada.adicionarProdutoPedido("Samuel", "Sushi Salmao", "Joao");
 			Fachada.adicionarProdutoPedido("Samuel", "Sushi Camarão", "Pedro");
@@ -382,8 +388,6 @@ public class DeliveryApp {
 		JLabel lblPedidos = new JLabel("Pedidos");
 		lblPedidos.setFont(new Font("Ubuntu Mono", Font.PLAIN, 54));
 		lblPedidos.setBounds(469, 28, 429, 56);
-		//lblPedidos.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		//lblPedidos.setBounds(399, 17, 140, 59);
 		panel_pedidos.add(lblPedidos);
 		panel_pedidos.setBackground(new Color(239, 156, 166));
 		
@@ -418,7 +422,6 @@ public class DeliveryApp {
 		final JPanel panel_pedidos_defua = new JPanel();
 		panel_pedidos_defua.setBackground(new Color(239, 156, 166));
 		panel_pedidos_card.add(panel_pedidos_defua, "name_8505530037068");
-		
 		
 		final JPanel panel_pedidos_listar = new JPanel();
 		panel_pedidos_card.add(panel_pedidos_listar, "name_8209689044899");
@@ -682,7 +685,6 @@ public class DeliveryApp {
 	    
 		btn_abrir_pedido_Ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	
-				System.out.println(comboBox_1.getSelectedItem());
 				String telefone = abrir_ped.getText();
 				Pedido p = null;
 				try {
@@ -695,8 +697,6 @@ public class DeliveryApp {
 		    		for(Produto pa : prods) {
 		    			comboBoxItems.add(pa.getNome());
 		    		}
-
-		    	    final DefaultComboBoxModel model = new DefaultComboBoxModel(comboBoxItems);
 		    	    comboBox_1.setModel(new DefaultComboBoxModel(comboBoxItems));
 		    	    
 				} catch (Exception e) {
@@ -728,8 +728,6 @@ public class DeliveryApp {
 		    		for(Produto pa : prods) {
 		    			comboBoxItems.add(pa.getNome());
 		    		}
-
-		    	    final DefaultComboBoxModel model = new DefaultComboBoxModel(comboBoxItems);
 		    	    comboBox.setModel(new DefaultComboBoxModel(comboBoxItems));
 		    	    
 				} catch (Exception e) {
@@ -816,7 +814,6 @@ public class DeliveryApp {
 				Cliente c = null;
 				Pedido p = null;
 				
-				
 				try {
 					c = Fachada.localizarCliente(telefone);
 					p = Fachada.consultarPedido(telefone);
@@ -842,7 +839,6 @@ public class DeliveryApp {
 							e.printStackTrace();
 							lblStatus.setText(e.getMessage());
 						}
-						
 					}
 				});
 				
@@ -923,35 +919,6 @@ public class DeliveryApp {
 		chckbxHoje.setBounds(503, 211, 119, 40);
 		panel_arrecadacao.add(chckbxHoje);
 		
-		
-//		try {
-//			produto = Fachada.cadastrarProduto("Sushi Salmao", 19.5);
-//			produto = Fachada.cadastrarProduto("Sushi Camarão", 20.5);
-//			produto = Fachada.cadastrarProduto("Sushi Kani", 19.0);
-//			produto = Fachada.cadastrarProduto("Temaki Salmao", 20.0);
-//			produto = Fachada.cadastrarProduto("Temaki Camarão", 21.0);
-//			cliente = Fachada.cadastrarCliente("Samuel", "9999-1234", "samuel@samuel.com", "Rua da Lua");
-//			pedido = Fachada.abrirPedido("9999-1234");
-//			Fachada.adicionarProdutoPedido("Samuel", "Sushi Salmao", "Joao");
-//			Fachada.adicionarProdutoPedido("Samuel", "Sushi Camarão", "Pedro");
-//			Fachada.adicionarProdutoPedido("Samuel", "Sushi Camarão", "Pedro");
-//			Fachada.adicionarProdutoPedido("Samuel", "Temaki Camarão", "Jane");
-//			
-////			ArrayList<Pedido> p = new ArrayList<Pedido>();
-////			p = Fachada.listarPedidos();
-////			
-////			for(Pedido ped: p ) {
-////				if(!ped.isFechado()) {
-////					lblMostrarTotal.setText("Total: " + ped.getTotal());
-////				}
-////			}
-////			
-//		   
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
 		chckbxHoje.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -964,53 +931,13 @@ public class DeliveryApp {
 		
 		btnArrecadacaoOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
 				String data = txtArrecadacao.getText();
 				String dataArr[] = data.split("/");
-				System.out.println(data + " is " + dataArr[0]);
-				
 				LocalDate dataPesquisa = LocalDate.of(Integer.parseInt(dataArr[2]), Integer.parseInt(dataArr[1]), Integer.parseInt(dataArr[0]));
-				System.out.println(dataPesquisa + "localdate");
-				//LocalDate ontem = LocalDate.of(2019,01,10);
-			    //LocalDate hoje = LocalDate.now();
-
 				double valor = Fachada.calcularArrecadacao(dataPesquisa);
 				lblMostrarTotal.setText("O valor total é: R$" + valor);
-//				ArrayList<Pedido> p = new ArrayList<Pedido>();
-//				try {
-//					p = Fachada.listarPedidos();
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//				
-//				for(Pedido ped: p ) {
-//					if(!ped.isFechado()) {
-//						lblMostrarTotal.setText("Total: " + ped.getTotal());
-//					}
-//				}
 			}
 		});
-//		System.out.println("Produto Cadastrado: "+ produto.getNome());
-//		
-//		
-//		
-//		cliente = Fachada.cadastrarCliente("Samuel", "9999-1234", "samuel@samuel.com", "Rua da Lua");
-//		System.out.println("Cliente Cadastrado: "+ cliente.getNome());
-//		
-//		cliente = Fachada.cadastrarCliente("Denise", "9999-4321", "denise@denise.com", "Rua da Alegria");
-//		cliente = Fachada.cadastrarCliente("Marcio", "9991-1234", "marcio@marcio.com", "Avenida Ferreira");
-//		cliente = Fachada.cadastrarCliente("Ana", "9991-4321", "ana@ana.com", "Avenida Poisson");
-//
-//		pedido = Fachada.abrirPedido("9999-1234");
-//		System.out.println("Pedido Cadastrado para 1234: "+ pedido.getId());
-//		Fachada.fecharPedido("9999-1234", "Joao");
-//		pedido = Fachada.abrirPedido("9999-1234");
-//		System.out.println("Pedido Cadastrado para 1234: "+ pedido.getId());
-//		pedido = Fachada.abrirPedido("9991-1234");
-//		System.out.println("Pedido Cadastrado: "+ pedido.getId());
-//
-//		pedido = Fachada.abrirPedido("9999-4321");	
-//		System.out.println("Pedido Cadastrado: "+ pedido.getId());
 
 		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1019,8 +946,6 @@ public class DeliveryApp {
 		JLabel lblClientes = new JLabel("Clientes");
 		lblClientes.setFont(new Font("Ubuntu Mono", Font.PLAIN, 54));
 		lblClientes.setBounds(425, 31, 429, 56);
-		//lblClientes.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		//lblClientes.setBounds(504, 18, 220, 56);
 		panel_clientes.add(lblClientes);
 		panel_clientes.setBackground(new Color(239, 156, 166));
 		
@@ -1148,8 +1073,6 @@ public class DeliveryApp {
 		JLabel lblProdutos = new JLabel("Produtos");
 		lblProdutos.setFont(new Font("Ubuntu Mono", Font.PLAIN, 54));
 		lblProdutos.setBounds(425, 31, 429, 56);
-		//lblProdutos.setFont(new Font("Ubuntu Mono", Font.PLAIN, 35));
-		//lblProdutos.setBounds(363, 18, 220, 56);
 		panel_produtos.add(lblProdutos);
 		panel_produtos.setBackground(new Color(239, 156, 166));
 		
@@ -1330,7 +1253,6 @@ public class DeliveryApp {
 					e.printStackTrace();
 					txtArea_produto.setText("Não foi possível cadastrar o produto!");
 				}
-				
 			}
 		});
 		

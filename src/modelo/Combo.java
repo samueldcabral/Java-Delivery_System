@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Combo extends Produto{
 	private ArrayList<Produto> componentes = new ArrayList<Produto>();
 	private double total;
-	//private String nomeCombo;
 	private final static double desconto = 0.9;
 	
 	public Combo(int id, String nome, double preco, ArrayList<Produto> prods) {
@@ -33,13 +32,5 @@ public class Combo extends Produto{
 	public void setComponentes(ArrayList<Produto> componentes) {
 		this.componentes = componentes;
 	}
-
-//	public String getNomeCombo() {
-//		return nomeCombo;
-//	}
-//
-//	public void setNomeCombo(String nomeCombo) {
-//		this.nomeCombo = nomeCombo;
-//	}
 
 }
