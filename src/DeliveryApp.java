@@ -462,13 +462,15 @@ public class DeliveryApp {
 		btn_filtrar_pedido_Ok.setBounds(704, 75, 74, 35);
 		panel_pedidos_listar.add(btn_filtrar_pedido_Ok);
 		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(138, 134, 826, 425);
+		panel_pedidos_listar.add(scrollPane_1);
+		
 		final JTextArea txt_filtrar_ped = new JTextArea();
+		scrollPane_1.setViewportView(txt_filtrar_ped);
 		txt_filtrar_ped.setRows(60);
-		txt_filtrar_ped.setLineWrap(true);
 		txt_filtrar_ped.setColumns(3);
 		txt_filtrar_ped.setFont(new Font("Monospaced", Font.BOLD, 20));
-		txt_filtrar_ped.setBounds(138, 134, 826, 425);
-		panel_pedidos_listar.add(txt_filtrar_ped);
 		
 			
 		JLabel lblTelxxxxxxxx = new JLabel("Tel (xxxx-xxxx):");
@@ -772,11 +774,13 @@ public class DeliveryApp {
 		lbl_consultar.setBounds(453, 27, 234, 35);
 		panel_pedidos_consultar.add(lbl_consultar);
 		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(187, 138, 714, 285);
+		panel_pedidos_consultar.add(scrollPane_2);
+		
 		final JTextArea consultar_txt_field = new JTextArea();
-		consultar_txt_field.setLineWrap(true);
+		scrollPane_2.setViewportView(consultar_txt_field);
 		consultar_txt_field.setFont(new Font("Monospaced", Font.BOLD, 20));
-		consultar_txt_field.setBounds(187, 138, 714, 285);
-		panel_pedidos_consultar.add(consultar_txt_field);
 		
 		final JButton btnFechar = new JButton("FECHAR");
 		btnFechar.setBounds(187, 478, 132, 37);
@@ -1170,12 +1174,14 @@ public class DeliveryApp {
 		btn_cadastrar_produto.setBounds(213, 336, 241, 56);
 		panel_produtos.add(btn_cadastrar_produto);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(526, 231, 522, 563);
+		panel_produtos.add(scrollPane);
+		
 		final JTextArea txtArea_produto = new JTextArea();
-		txtArea_produto.setLineWrap(true);
+		scrollPane.setViewportView(txtArea_produto);
 		txtArea_produto.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtArea_produto.setEditable(false);
-		txtArea_produto.setBounds(526, 231, 522, 563);
-		panel_produtos.add(txtArea_produto);
 		
 		filtrar_prod = new JTextField();
 		filtrar_prod.setFont(new Font("Tahoma", Font.PLAIN, 24));
