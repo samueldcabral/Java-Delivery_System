@@ -340,6 +340,41 @@ public class DeliveryApp {
 				panel_arrecadacao.setVisible(true);
 			}
 		});
+		
+		///////////////////////////////////////////////////////////////////////////////////
+		//PRE CADASTRAR
+		
+		try {
+			Produto sushiSalmao = Fachada.cadastrarProduto("Sushi Salmao", 19.5);
+			Produto sushiCamarao = Fachada.cadastrarProduto("Sushi Camarão", 20.5);
+			Produto sushiKani = Fachada.cadastrarProduto("Sushi Kani", 19.0);
+			Produto temakiSalmao = Fachada.cadastrarProduto("Temaki Salmao", 20.0);
+			Produto temakiCamarao = Fachada.cadastrarProduto("Temaki Camarão", 21.0);
+			cliente = Fachada.cadastrarCliente("Samuel", "9999-1234", "samuel@samuel.com", "Rua da Lua");
+			cliente = Fachada.cadastrarCliente("Marianna Leite", "9999-4321", "marianna@m.com", "Rua do Pão");
+			pedido = Fachada.abrirPedido("9999-1234");
+			List<Integer> idCombo = new ArrayList<>();
+			idCombo.add(sushiSalmao.getId());
+			idCombo.add(temakiSalmao.getId());
+			Produto Combo1 = Fachada.criarCombo("Combo Salmão", idCombo);
+			
+			idCombo.clear();
+			idCombo.add(sushiCamarao.getId());
+			idCombo.add(temakiCamarao.getId());
+			Produto Combo2 = Fachada.criarCombo("Combo Camarão", idCombo);
+			
+			Fachada.adicionarProdutoPedido("Samuel", "Sushi Salmao", "Joao");
+			Fachada.adicionarProdutoPedido("Samuel", "Sushi Camarão", "Pedro");
+			Fachada.adicionarProdutoPedido("Samuel", "Sushi Camarão", "Pedro");
+			Fachada.adicionarProdutoPedido("Samuel", "Temaki Camarão", "Jane");
+			
+			
+		   
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 		//PEDIDOS
@@ -875,34 +910,34 @@ public class DeliveryApp {
 		panel_arrecadacao.add(chckbxHoje);
 		
 		
-		try {
-			produto = Fachada.cadastrarProduto("Sushi Salmao", 19.5);
-			produto = Fachada.cadastrarProduto("Sushi Camarão", 20.5);
-			produto = Fachada.cadastrarProduto("Sushi Kani", 19.0);
-			produto = Fachada.cadastrarProduto("Temaki Salmao", 20.0);
-			produto = Fachada.cadastrarProduto("Temaki Camarão", 21.0);
-			cliente = Fachada.cadastrarCliente("Samuel", "9999-1234", "samuel@samuel.com", "Rua da Lua");
-			pedido = Fachada.abrirPedido("9999-1234");
-			Fachada.adicionarProdutoPedido("Samuel", "Sushi Salmao", "Joao");
-			Fachada.adicionarProdutoPedido("Samuel", "Sushi Camarão", "Pedro");
-			Fachada.adicionarProdutoPedido("Samuel", "Sushi Camarão", "Pedro");
-			Fachada.adicionarProdutoPedido("Samuel", "Temaki Camarão", "Jane");
-			
-//			ArrayList<Pedido> p = new ArrayList<Pedido>();
-//			p = Fachada.listarPedidos();
+//		try {
+//			produto = Fachada.cadastrarProduto("Sushi Salmao", 19.5);
+//			produto = Fachada.cadastrarProduto("Sushi Camarão", 20.5);
+//			produto = Fachada.cadastrarProduto("Sushi Kani", 19.0);
+//			produto = Fachada.cadastrarProduto("Temaki Salmao", 20.0);
+//			produto = Fachada.cadastrarProduto("Temaki Camarão", 21.0);
+//			cliente = Fachada.cadastrarCliente("Samuel", "9999-1234", "samuel@samuel.com", "Rua da Lua");
+//			pedido = Fachada.abrirPedido("9999-1234");
+//			Fachada.adicionarProdutoPedido("Samuel", "Sushi Salmao", "Joao");
+//			Fachada.adicionarProdutoPedido("Samuel", "Sushi Camarão", "Pedro");
+//			Fachada.adicionarProdutoPedido("Samuel", "Sushi Camarão", "Pedro");
+//			Fachada.adicionarProdutoPedido("Samuel", "Temaki Camarão", "Jane");
 //			
-//			for(Pedido ped: p ) {
-//				if(!ped.isFechado()) {
-//					lblMostrarTotal.setText("Total: " + ped.getTotal());
-//				}
-//			}
-//			
-		   
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+////			ArrayList<Pedido> p = new ArrayList<Pedido>();
+////			p = Fachada.listarPedidos();
+////			
+////			for(Pedido ped: p ) {
+////				if(!ped.isFechado()) {
+////					lblMostrarTotal.setText("Total: " + ped.getTotal());
+////				}
+////			}
+////			
+//		   
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
 		chckbxHoje.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -1137,7 +1172,7 @@ public class DeliveryApp {
 		
 		final JTextArea txtArea_produto = new JTextArea();
 		txtArea_produto.setLineWrap(true);
-		txtArea_produto.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		txtArea_produto.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtArea_produto.setEditable(false);
 		txtArea_produto.setBounds(526, 231, 522, 563);
 		panel_produtos.add(txtArea_produto);
