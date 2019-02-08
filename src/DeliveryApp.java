@@ -947,7 +947,7 @@ public class DeliveryApp {
 			public void mouseClicked(MouseEvent arg0) {
 				if(chckbxHoje.isSelected()) {
 					LocalDate hoje = LocalDate.now();
-					txtArrecadacao.setText(hoje.getYear() + "/" + hoje.getMonthValue() + "/" + hoje.getDayOfMonth());
+					txtArrecadacao.setText(hoje.getDayOfMonth() + "/" + hoje.getMonthValue() + "/" + hoje.getYear());
 				}
 			}
 		});
@@ -959,7 +959,7 @@ public class DeliveryApp {
 				String dataArr[] = data.split("/");
 				System.out.println(data + " is " + dataArr[0]);
 				
-				LocalDate dataPesquisa = LocalDate.of(Integer.parseInt(dataArr[0]), Integer.parseInt(dataArr[1]), Integer.parseInt(dataArr[2]));
+				LocalDate dataPesquisa = LocalDate.of(Integer.parseInt(dataArr[2]), Integer.parseInt(dataArr[1]), Integer.parseInt(dataArr[0]));
 				System.out.println(dataPesquisa + "localdate");
 				//LocalDate ontem = LocalDate.of(2019,01,10);
 			    //LocalDate hoje = LocalDate.now();

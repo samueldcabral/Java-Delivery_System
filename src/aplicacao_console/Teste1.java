@@ -7,6 +7,7 @@ package aplicacao_console;
 
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import assets.JavaMail;
 import assets.pdf;
@@ -98,12 +99,12 @@ public class Teste1 {
 				texto +=  p + "\n"; 
 		System.out.println(texto);
 		
-		ArrayList<Cliente> lista3 = Fachada.listarClientes();
+		TreeMap<String, Cliente> lista3 = Fachada.listarClientes();
 		texto = "\nListagem de Clientes: \n\n";
 		if(lista3.isEmpty())
 			texto += "não tem cliente cadastrado\n";
 		else
-			for(Cliente c : lista3)
+			for(Cliente c : lista3.values())
 				texto += c + "\n";
 		System.out.println(texto);
 		

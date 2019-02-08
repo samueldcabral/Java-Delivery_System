@@ -1,4 +1,11 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.TreeMap;
+
+import fachada.Fachada;
+import modelo.Cliente;
+import modelo.Pedido;
+import modelo.Produto;
 
 public class Teste1 {
 	
@@ -19,13 +26,13 @@ public class Teste1 {
 			System.out.println("cadastrou cliente="+maria.getNome());
 	
 			Produto pizza = Fachada.cadastrarProduto("Pizza", 30);
-			System.out.println("cadastrou produto="+pizza.getDecricao());
+			System.out.println("cadastrou produto="+pizza.getNome());
 			Produto sushi = Fachada.cadastrarProduto("Sushi", 40);
-			System.out.println("cadastrou produto="+sushi.getDecricao());
+			System.out.println("cadastrou produto="+sushi.getNome());
 			Produto cocaCola = Fachada.cadastrarProduto("Coca-cola", 10);
-			System.out.println("cadastrou produto="+cocaCola.getDecricao());
+			System.out.println("cadastrou produto="+cocaCola.getNome());
 			Produto guarana = Fachada.cadastrarProduto("Guarana", 5);	
-			System.out.println("cadastrou produto="+guarana.getDecricao());		
+			System.out.println("cadastrou produto="+guarana.getNome());		
 			
 			System.out.println("\nAbrir pedidos");			
 			Pedido pedido1 = Fachada.abrirPedido("98745-0643");
@@ -80,7 +87,7 @@ public class Teste1 {
 	public static void parte2 () {
 		
 		System.out.println("Clientes cadastrados: ");
-		ArrayList<Cliente> clientes = Fachada.listarClientes();
+		TreeMap<String, Cliente> clientes = Fachada.listarClientes();
 		if (!clientes.isEmpty())
 			System.out.println(clientes);
 		else
@@ -110,7 +117,13 @@ public class Teste1 {
 
 
 		System.out.println("Pedidos cadastrados de um cliente: ");			
-		ArrayList<Pedido> pedidosPorCliente = Fachada.listarPedidos("98745-0643");
+		ArrayList<Pedido> pedidosPorCliente = null;
+		try {
+			pedidosPorCliente = Fachada.listarPedidos("98745-0643");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (!pedidosPorCliente.isEmpty())
 			System.out.println(pedidosPorCliente);
 		else
@@ -146,8 +159,9 @@ public class Teste1 {
 			System.out.println("*************FALHA5: nao pode abrir pedido ja aberto"); 
 		}catch (Exception e) {System.out.println("5--->"+e.getMessage());}
 		try {
-			Fachada.fecharPedido("98820-0222");	//ok
+			Fachada.fecharPedido("98820-0222", "JOAO");	//ok
 			Fachada.cancelarPedido("98820-0222");
 			System.out.println("*************FALHA6: nao pode cancelar pedido fechado"); 
 		}catch (Exception e) {System.out.println("6--->"+e.getMessage());}
+}
 }
